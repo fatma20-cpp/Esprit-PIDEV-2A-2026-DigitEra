@@ -52,7 +52,7 @@ The system is based on a modular architecture including:
 
 ## Contributors
 
-- Student(s): fatma khaldi/ons kammoun/lina agrebi/rym khamessi/moetaz rabboudi 
+- Student(s): fatma khaldi/ons kammoun/lina agrebi/youssef bouchoucha/moktada guermiti
 
 ---
 
