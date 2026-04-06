@@ -20,6 +20,55 @@ body {
 	overflow-x: hidden;
 }
 
+/* Offers Section Cards */
+.offer-card {
+	max-width: 300px;
+	min-height: 220px;
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-size: 14px;
+	text-align: left;
+}
+
+.offer-card .stat-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 8px;
+}
+
+.offer-card .stat-title {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.offer-card .stat-value {
+	font-size: 15px;
+	font-weight: 500;
+	margin-bottom: 6px;
+}
+
+.offer-card .stat-description {
+	font-size: 13px;
+	color: #555;
+	margin-bottom: 8px;
+	line-height: 1.3;
+}
+
+.offer-card .stat-budget {
+	font-size: 14px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.offer-card .cta-button {
+	font-size: 14px;
+	padding: 6px 10px;
+	width: 100%;
+}
+
 /* Navigation */
 nav {
 	position: fixed;

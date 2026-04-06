@@ -46,6 +46,10 @@ https://templatemo.com/tm-609-crypto-vault
     --overlay: rgba(0, 0, 0, 0.5);
 }
 
+a{
+    text-decoration: none;
+}
+
 /* ========================================
    CSS Variables - Light Theme
 ======================================== */
