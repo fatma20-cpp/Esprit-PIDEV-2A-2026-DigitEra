@@ -59,7 +59,7 @@ The system is based on a modular architecture including:
 ## Academic Context
 
 Developed at **Esprit School of Engineering – Tunisia**  
-PIDEV – 3rd Year Engineering Program  
+PIDEV – 2nd Year Engineering Program  
 Academic Year: 2025–2026  
 
 ---
