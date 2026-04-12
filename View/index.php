@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<?php
+include '../Controller/OffreController.php';
+
+$offerC = new OffreController();
+$list = $offerC->afficheroffres();
+?><html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DigitEra - Freelancers & Clients Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../css/templatemo-graph-page.css">
 </head>
 
@@ -27,6 +33,7 @@
                 <li><a href="#freelancers">Freelancers</a></li>
                 <li><a href="#offers">Offers</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="./login.html">Log in</a></li>
             </ul>
             <a href="https://www.google.com/search" target="_blank" rel="noopener" title="Search">
                 <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -144,6 +151,87 @@
         </div>
     </section>
 
+    <!-- Offers Section -->
+    <section class="dashboard-section" id="offers">
+        <div class="dashboard-container">
+            <h2 class="section-title">Client Offers</h2>
+
+            <div class="stats-grid">
+
+                <?php foreach ($list as $offer) { ?>
+
+                <div class="stat-card offer-card offer-item">
+
+                    <!-- HEADER -->
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+
+                        <div class="stat-title">
+                            <?php echo htmlspecialchars($offer['title']); ?>
+                        </div>
+                    </div>
+
+                    <!-- CATEGORY -->
+                    <div class="stat-category">
+                        <i class="fa-solid fa-tag"></i>
+                        <?php echo htmlspecialchars($offer['category']); ?>
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+                    <div class="stat-description">
+                        <?php echo htmlspecialchars($offer['description']); ?>
+                    </div>
+
+                    <!-- META INFO -->
+                    <div class="offer-meta">
+
+                        <div>
+                            <i class="fa-solid fa-coins"></i>
+                            <strong><?php echo $offer['budget']; ?> DT</strong>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-hourglass-half"></i>
+                            Deadline:
+                            <span class="deadline">
+                                <?php echo $offer['deadline']; ?>
+                            </span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-calendar-days"></i>
+                            Posted:
+                            <span class="created">
+                                <?php echo $offer['created_at']; ?>
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <!-- ACTION BUTTON -->
+                    <div class="actions">
+
+                        <a href="create_demande.php?id_offer=<?php echo $offer['id_offer']; ?>" class="btn-apply">
+                            <i class="fa-solid fa-paper-plane"></i> Apply
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <?php } ?>
+
+            </div>
+
+            <!-- PAGINATION -->
+            <div id="pagination" style="text-align:center; margin-top:30px;"></div>
+
+        </div>
+    </section>
+
     <!-- Freelancers Section -->
     <section class="dashboard-section" id="freelancers">
         <div class="dashboard-container">
@@ -186,69 +274,6 @@
         </div>
     </section>
 
-    <!-- Offers Section -->
-    <section class="dashboard-section" id="offers">
-        <div class="dashboard-container">
-            <h2 class="section-title">Client Offers</h2>
-            <div class="stats-grid">
-                <!-- Offer Card 1 -->
-                <div class="stat-card offer-card">
-                    <div class="stat-header">
-                        <div class="stat-icon">👤</div>
-                        <div class="stat-title">John Smith</div>
-                    </div>
-                    <div class="stat-value">Website Redesign</div>
-                    <div class="stat-description">
-                        Full-stack developer needed to revamp our corporate website with a modern, responsive layout.
-                    </div>
-                    <div class="stat-budget">💰 $1,500</div>
-                    <a href="#contact" class="cta-button">Apply</a>
-                </div>
-
-                <!-- Offer Card 2 -->
-                <div class="stat-card offer-card">
-                    <div class="stat-header">
-                        <div class="stat-icon">🏢</div>
-                        <div class="stat-title">Acme Corp</div>
-                    </div>
-                    <div class="stat-value">Mobile App Dev</div>
-                    <div class="stat-description">
-                        iOS & Android app development for logistics management and delivery tracking.
-                    </div>
-                    <div class="stat-budget">💰 $3,200</div>
-                    <a href="#contact" class="cta-button">Apply</a>
-                </div>
-
-                <!-- Offer Card 3 -->
-                <div class="stat-card offer-card">
-                    <div class="stat-header">
-                        <div class="stat-icon">🎨</div>
-                        <div class="stat-title">Sara Lee</div>
-                    </div>
-                    <div class="stat-value">UI/UX Design</div>
-                    <div class="stat-description">
-                        Design a seamless, engaging experience for our e-commerce platform.
-                    </div>
-                    <div class="stat-budget">💰 $800</div>
-                    <a href="#contact" class="cta-button">Apply</a>
-                </div>
-
-                <!-- Offer Card 4 -->
-                <div class="stat-card offer-card">
-                    <div class="stat-header">
-                        <div class="stat-icon">⚙️</div>
-                        <div class="stat-title">Tech Solutions</div>
-                    </div>
-                    <div class="stat-value">Backend API</div>
-                    <div class="stat-description">
-                        Integrate third-party APIs and optimize backend performance for our platform.
-                    </div>
-                    <div class="stat-budget">💰 $1,200</div>
-                    <a href="#contact" class="cta-button">Apply</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Contact Section -->
     <section class="contact-section" id="contact">
@@ -331,7 +356,7 @@
         </div>
     </footer>
 
-    <script src="../jstemplatemo-graph-script.js"></script>
+    <script src="../js/templatemo-graph-script.js"></script>
 </body>
 
 </html>

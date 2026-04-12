@@ -5,6 +5,11 @@ class Offre {
     private $title = null;
     private $description = null;
     private $budget = null;
+
+    private $created_at = null;
+    private $category = null;
+    private $status = null;
+    private $deadline = null;   
     private $id_company = null;
 
     function __construct($title, $description, $budget, $id_company) {
@@ -35,6 +40,22 @@ class Offre {
         return $this->id_company;
     }
 
+    public function getCreatedAt() {
+        return $this->created_at;
+    }
+
+    public function getCategory() {
+        return $this->category;
+    }
+
+    private function getStatus() {
+        return $this->status;
+    }
+
+    public function getDeadline() {
+        return $this->deadline;
+    }
+
     // SETTERS
     public function setIdOffer($id) {
         $this->id_offer = $id;
@@ -52,8 +73,26 @@ class Offre {
         $this->budget = $budget;
     }
 
+    
+
     public function setCompanyId($id_company) {
         $this->id_company = $id_company;
+    }
+
+    
+    
+        public function setCreatedAt($created_at) {
+            $this->created_at = $created_at;
+        }
+
+    public function setCategory($category) {
+        $this->category = $category;
+       }
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+    public function setDeadline($deadline) {
+        $this->deadline = $deadline;
     }
 }
 ?>

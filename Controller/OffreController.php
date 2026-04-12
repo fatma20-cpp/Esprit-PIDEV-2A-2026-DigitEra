@@ -18,24 +18,24 @@ class OffreController {
         }
     }
 
-    // 🔹 DELETE
+    // 🔹 DELETE (FIXED)
     function supprimerOffer($id){
         $sql = "DELETE FROM offres WHERE id_offre = :id";
         $db = config::getConnexion();
 
         try {
             $req = $db->prepare($sql);
-            $req->bindValue(':id', $id);
-            $req->execute();
+            $req->bindValue(':id', (int)$id, PDO::PARAM_INT);
+            return $req->execute();
         } catch(Exception $e){
-            die('Erreur: '.$e->getMessage());
+            die('Erreur DELETE: '.$e->getMessage());
         }
     }
 
     // 🔹 CREATE
     function ajouterOffer($offer){
-        $sql = "INSERT INTO offres (title, description, budget, id_company)
-                VALUES (:title, :description, :budget, :id_company)";
+        $sql = "INSERT INTO offres (title, description, budget, id_company, deadline, category)
+                VALUES (:title, :description, :budget, :id_company, :deadline, :category)";
 
         $db = config::getConnexion();
 
@@ -45,32 +45,37 @@ class OffreController {
                 'title' => $offer->getTitle(),
                 'description' => $offer->getDescription(),
                 'budget' => $offer->getBudget(),
-                'id_company' => $offer->getCompanyId()
+                'id_company' => $offer->getCompanyId(),
+                'deadline' => $offer->getDeadline(),
+                'category' => $offer->getCategory()
             ]);
         } catch(Exception $e){
-            echo 'Erreur: '.$e->getMessage();
+            die('Erreur INSERT: '.$e->getMessage());
         }
     }
 
-    // 🔹 GET ONE
+    // 🔹 GET ONE (SECURED)
     function recupererOffer($id){
-        $sql = "SELECT * FROM offres WHERE id_offre = $id";
+        $sql = "SELECT * FROM offres WHERE id_offre = :id";
         $db = config::getConnexion();
 
         try {
-            $query = $db->query($sql);
+            $query = $db->prepare($sql);
+            $query->execute(['id' => $id]);
             return $query->fetch();
         } catch(Exception $e){
             die('Erreur: '.$e->getMessage());
         }
     }
 
-    // 🔹 UPDATE
+    // 🔹 UPDATE (FIXED BUG)
     function modifierOffer($offer, $id){
         $sql = "UPDATE offres SET
                 title = :title,
                 description = :description,
-                budget = :budget
+                budget = :budget,
+                deadline = :deadline,
+                category = :category
                 WHERE id_offre = :id";
 
         $db = config::getConnexion();
@@ -81,21 +86,23 @@ class OffreController {
                 'title' => $offer->getTitle(),
                 'description' => $offer->getDescription(),
                 'budget' => $offer->getBudget(),
+                'deadline' => $offer->getDeadline(),
+                'category' => $offer->getCategory(),
                 'id' => $id
             ]);
         } catch(Exception $e){
-            echo 'Erreur: '.$e->getMessage();
+            die('Erreur UPDATE: '.$e->getMessage());
         }
     }
 
     // 🔹 SEARCH
     function rechercherOffer($title){
-        $sql = "SELECT * FROM offres WHERE title LIKE '%$title%'";
+        $sql = "SELECT * FROM offres WHERE title LIKE :title";
         $db = config::getConnexion();
 
         try {
             $query = $db->prepare($sql);
-            $query->execute();
+            $query->execute(['title' => "%$title%"]);
             return $query->fetchAll();
         } catch(Exception $e){
             die('Erreur: '.$e->getMessage());
