@@ -1,26 +1,59 @@
 <?php
 class Offre {
-    private $id;
-    private $titre;
-    private $description;
-    private $prix;
 
-    public function __construct($id, $titre, $description, $prix) {
-        $this->id = $id;
-        $this->titre = $titre;
+    private $id_offer = null;
+    private $title = null;
+    private $description = null;
+    private $budget = null;
+    private $id_company = null;
+
+    function __construct($title, $description, $budget, $id_company) {
+        $this->title = $title;
         $this->description = $description;
-        $this->prix = $prix;
+        $this->budget = $budget;
+        $this->id_company = $id_company;
     }
 
-    // Getters
-    public function getId() { return $this->id; }
-    public function getTitre() { return $this->titre; }
-    public function getDescription() { return $this->description; }
-    public function getPrix() { return $this->prix; }
+    // GETTERS
+    public function getIdOffer() {
+        return $this->id_offer;
+    }
 
-    // Setters
-    public function setTitre($titre) { $this->titre = $titre; }
-    public function setDescription($description) { $this->description = $description; }
-    public function setPrix($prix) { $this->prix = $prix; }
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function getBudget() {
+        return $this->budget;
+    }
+
+    public function getCompanyId() {
+        return $this->id_company;
+    }
+
+    // SETTERS
+    public function setIdOffer($id) {
+        $this->id_offer = $id;
+    }
+
+    public function setTitle($title) {
+        $this->title = $title;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
+    public function setBudget($budget) {
+        $this->budget = $budget;
+    }
+
+    public function setCompanyId($id_company) {
+        $this->id_company = $id_company;
+    }
 }
 ?>
