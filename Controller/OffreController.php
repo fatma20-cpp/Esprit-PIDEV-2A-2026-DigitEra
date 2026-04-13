@@ -18,6 +18,21 @@ class OffreController {
         }
     }
 
+        function afficherOffreParCompanyId($id){
+        $sql = "SELECT * FROM offres where id_company = :id";
+        $db = config::getConnexion();
+
+        try {
+            $query = $db->prepare($sql);
+             $query->execute(['id' => $id]);
+            return $query->fetchAll();
+        } catch(Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }
+    }
+
+    
+
     // 🔹 DELETE (FIXED)
     function supprimerOffer($id){
         $sql = "DELETE FROM offres WHERE id_offre = :id";
