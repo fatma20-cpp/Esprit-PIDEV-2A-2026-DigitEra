@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <title>Ajouter Formation</title>
 
+<script>
+    if (localStorage.getItem('daynight-theme') === 'carbon') {
+        document.documentElement.classList.add('carbon');
+    }
+</script>
+
 <link rel="stylesheet" href="../back/template/templatemo-daynight-style.css">
 
 <style>
@@ -54,10 +60,29 @@ body {
 <!-- ✅ FRONT NAVBAR -->
 <nav class="top-nav">
     <div class="nav-container">
-        <a href="index.php" class="logo">My Platform</a>
-
-        <div>
-            <a href="index.php" class="nav-link">Home</a>
+        <div class="nav-left">
+            <a href="index.php" class="logo">
+                <div class="logo-icon">✔</div>
+                Formation Certification
+            </a>
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <a href="index.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">
+                        Accueil
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="addFormation.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'addFormation.php' ? 'active' : ''; ?>">
+                        Ajouter Formation
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="theme-toggle">
+                <button class="theme-btn theme-btn-snow active" onclick="setTheme('snow')" title="Snow Edition">☀</button>
+                <button class="theme-btn theme-btn-carbon" onclick="setTheme('carbon')" title="Carbon Edition">🌙</button>
+            </div>
         </div>
     </div>
 </nav>
@@ -209,5 +234,6 @@ function validateForm(){
 }
 </script>
 
+<script src="../back/template/templatemo-daynight-script.js"></script>
 </body>
 </html>

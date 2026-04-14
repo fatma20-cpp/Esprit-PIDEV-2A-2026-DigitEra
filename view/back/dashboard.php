@@ -23,7 +23,7 @@ $total = count($formations);
 
 <?php include 'layout/header.php'; ?>
 
-<!-- ❌ REMOVE <main> (already in header) -->
+
 
 <!-- HEADER -->
 <div class="page-header">

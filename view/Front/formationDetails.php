@@ -16,7 +16,13 @@ $formation = $controller->getFormationById($_GET['id']);
 <meta charset="UTF-8">
 <title>Détails Formation</title>
 
-<link rel="stylesheet" href="../back/template/css/templatemo-daynight-style.css">
+<script>
+    if (localStorage.getItem('daynight-theme') === 'carbon') {
+        document.documentElement.classList.add('carbon');
+    }
+</script>
+
+<link rel="stylesheet" href="../back/template/templatemo-daynight-style.css">
 
 <style>
 
@@ -109,10 +115,29 @@ body {
 <!-- 🔝 NAVBAR -->
 <nav class="top-nav">
     <div class="nav-container">
-        <a href="index.php" class="logo">My Platform</a>
-
-        <div>
-            <a href="index.php" class="nav-link">Home</a>
+        <div class="nav-left">
+            <a href="index.php" class="logo">
+                <div class="logo-icon">✔</div>
+                Formation Certification
+            </a>
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <a href="index.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">
+                        Accueil
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="addFormation.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'addFormation.php' ? 'active' : ''; ?>">
+                        Ajouter Formation
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="theme-toggle">
+                <button class="theme-btn theme-btn-snow active" onclick="setTheme('snow')" title="Snow Edition">☀</button>
+                <button class="theme-btn theme-btn-carbon" onclick="setTheme('carbon')" title="Carbon Edition">🌙</button>
+            </div>
         </div>
     </div>
 </nav>
@@ -149,7 +174,7 @@ body {
 
 </div>
 
-<script src="../back/template/js/templatemo-daynight-script.js"></script>
+<script src="../back/template/templatemo-daynight-script.js"></script>
 
 </body>
 </html>
