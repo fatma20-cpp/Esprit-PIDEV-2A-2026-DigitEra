@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — Digitera</title>
+    <link rel="stylesheet" href="view/login.css">
+</head>
+<body>
+
+<!-- Theme Toggle -->
+<div class="login-theme-toggle theme-toggle">
+    <button class="theme-btn active" id="btn-snow" title="Light mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+    </button>
+    <button class="theme-btn" id="btn-carbon" title="Dark mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+    </button>
+</div>
+
+<div class="login-page">
+    <div class="login-container login-container--wide">
+        <div class="login-card">
+
+            <div class="login-header">
+                <div class="login-logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <span>Digitera</span>
+                </div>
+                <h1 class="login-title">Create your account</h1>
+                <p class="login-subtitle">Join Digitera — it's free</p>
+            </div>
+
+            <!--PHP_ERROR-->
+            <!--PHP_SUCCESS-->
+
+            <div class="login-form">
+                <form method="POST" action="index.php?page=register" enctype="multipart/form-data" novalidate>
+
+                    <div class="two-col-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="nom">Last Name *</label>
+                            <input class="form-control" type="text" id="nom" name="nom"
+                                   placeholder="Dupont" value="__NOM__" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="prenom">First Name *</label>
+                            <input class="form-control" type="text" id="prenom" name="prenom"
+                                   placeholder="Marie" value="__PRENOM__" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address *</label>
+                        <input class="form-control" type="email" id="email" name="email"
+                               placeholder="you@example.com" value="__EMAIL__" required>
+                    </div>
+
+                    <div class="two-col-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="telephone">Phone Number</label>
+                            <input class="form-control" type="tel" id="telephone" name="telephone"
+                                   placeholder="+216 XX XXX XXX" value="__TELEPHONE__">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="role">Account Type *</label>
+                            <select class="form-select" id="role" name="role">
+                                <option value="client" selected>Client</option>
+                                <option value="prestataire">Prestataire</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="two-col-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password *</label>
+                            <div class="input-password-wrap">
+                                <input class="form-control" type="password" id="password" name="password"
+                                       placeholder="Min. 6 characters" required>
+                                <button type="button" class="toggle-pw" id="togglePw" tabindex="-1">
+                                    <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="confirm_password">Confirm Password *</label>
+                            <input class="form-control" type="password" id="confirm_password"
+                                   name="confirm_password" placeholder="Repeat password" required>
+                        </div>
+                    </div>
+
+                    <!-- Photo upload — simple button -->
+                    <div class="form-group">
+                        <label class="form-label" for="photoInput">
+                            Profile Photo
+                            <span style="font-weight:400;color:var(--text-secondary);">(optional)</span>
+                        </label>
+                        <div style="display:flex;align-items:center;gap:.75rem;">
+                            <button type="button" class="photo-browse-btn" id="photoBrowseBtn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                     style="width:15px;height:15px;vertical-align:middle;margin-right:6px;">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                                Upload photo
+                            </button>
+                            <span id="photoFilename" style="font-size:.85rem;color:var(--text-secondary);">No file chosen</span>
+                            <input type="file" name="photo" id="photoInput" accept="image/*" style="display:none">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-full" style="margin-top:.5rem;">
+                        Create Account
+                    </button>
+                </form>
+            </div>
+
+            <div class="login-footer" style="margin-top:1.25rem;">
+                Already have an account? <a href="index.php?page=login">Sign in</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="view/login.js"></script>
+<script>
+document.getElementById('photoBrowseBtn').addEventListener('click', () => {
+    document.getElementById('photoInput').click();
+});
+
+document.getElementById('photoInput').addEventListener('change', function () {
+    const file = this.files[0];
+    document.getElementById('photoFilename').textContent = file ? file.name : 'No file chosen';
+});
+</script>
+</body>
+</html>

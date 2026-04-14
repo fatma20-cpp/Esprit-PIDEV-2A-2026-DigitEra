@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Work — Digitera</title>
+    <link rel="stylesheet" href="view/client_home.css">
+</head>
+<body>
+<div class="app-container">
+
+    <!-- TOP NAV (same structure as dashboard/profile) -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.php?page=client_home" class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    Digitera
+                </a>
+                <div class="nav-menu">
+                    <a href="index.php?page=client_home" class="nav-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                        </svg>
+                        Find Work
+                    </a>
+                    <a href="#" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        My Jobs
+                    </a>
+                    <a href="#" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        Messages
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <!-- Theme toggle (same as dashboard) -->
+                <div class="theme-toggle">
+                    <button class="theme-btn active" id="btn-snow" title="Light">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                        </svg>
+                    </button>
+                    <button class="theme-btn" id="btn-carbon" title="Dark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- User (clickable → profile) -->
+                <a href="index.php?page=profile" class="user-menu" title="Edit Profile">
+                    <div class="user-avatar">__INITIALS__</div>
+                    <span class="user-name">__FULLNAME__</span>
+                </a>
+
+                <!-- Logout -->
+                <a href="index.php?page=client_home&logout=1" class="btn-logout" title="Logout">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO BANNER -->
+    <div class="hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <p class="hero-label">Welcome back, __FIRSTNAME__ 👋</p>
+                <h1 class="hero-title">Find your next <em>great project</em></h1>
+                <p class="hero-sub">Connect with top clients and grow your freelance career on Digitera.</p>
+            </div>
+            <div class="hero-stats">
+                <div class="hstat">
+                    <span class="hstat-value">2,400+</span>
+                    <span class="hstat-label">Active Jobs</span>
+                </div>
+                <div class="hstat-sep"></div>
+                <div class="hstat">
+                    <span class="hstat-value">840</span>
+                    <span class="hstat-label">New Today</span>
+                </div>
+                <div class="hstat-sep"></div>
+                <div class="hstat">
+                    <span class="hstat-value">98%</span>
+                    <span class="hstat-label">Satisfaction</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="page-content">
+
+        <!-- FILTER BAR -->
+        <div class="filter-bar">
+            <div class="filter-tags">
+                <button class="ftag active">All Jobs</button>
+                <button class="ftag">Design</button>
+                <button class="ftag">Development</button>
+                <button class="ftag">Marketing</button>
+                <button class="ftag">Writing</button>
+                <button class="ftag">Data</button>
+            </div>
+            <select class="filter-select">
+                <option>Most Recent</option>
+                <option>Highest Budget</option>
+                <option>Best Match</option>
+            </select>
+        </div>
+
+        <div class="content-grid">
+
+            <!-- JOB LISTINGS -->
+            <div class="jobs-column">
+                <div class="section-header">
+                    <h2>Jobs for You</h2>
+                    <span class="badge-count">24 jobs</span>
+                </div>
+
+                <!-- Job Card 1 -->
+                <div class="job-card featured">
+                    <div class="job-top">
+                        <div class="job-client">
+                            <div class="client-logo cl-blue">TC</div>
+                            <div>
+                                <span class="client-name">TechCorp Inc.</span>
+                                <span class="client-rating">★ 4.9 <em>(87 reviews)</em></span>
+                            </div>
+                        </div>
+                        <div class="job-badges">
+                            <span class="jbadge jbadge-green">Featured</span>
+                            <span class="jbadge">Fixed Price</span>
+                        </div>
+                    </div>
+                    <h3 class="job-title">Senior React Developer — Dashboard Redesign</h3>
+                    <p class="job-desc">We need an experienced React developer to redesign our analytics dashboard. Must be proficient with D3.js, Tailwind, and modern state management (Zustand preferred).</p>
+                    <div class="job-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">D3.js</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">Zustand</span>
+                    </div>
+                    <div class="job-footer">
+                        <div class="job-budget">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <strong>$2,500 – $4,000</strong>
+                        </div>
+                        <div class="job-meta">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Posted 2h ago
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                12 proposals
+                            </span>
+                        </div>
+                        <button class="btn-apply">Apply Now</button>
+                    </div>
+                </div>
+
+                <!-- Job Card 2 -->
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="job-client">
+                            <div class="client-logo cl-purple">MX</div>
+                            <div>
+                                <span class="client-name">Maximo Studios</span>
+                                <span class="client-rating">★ 4.7 <em>(43 reviews)</em></span>
+                            </div>
+                        </div>
+                        <div class="job-badges">
+                            <span class="jbadge jbadge-orange">Urgent</span>
+                            <span class="jbadge">Hourly</span>
+                        </div>
+                    </div>
+                    <h3 class="job-title">UI/UX Designer for Mobile App — Fintech Startup</h3>
+                    <p class="job-desc">Looking for a talented designer to create wireframes and high-fidelity mockups for our mobile banking app. Figma expertise required. 2–3 weeks engagement.</p>
+                    <div class="job-tags">
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Mobile UI</span>
+                        <span class="skill-tag">Prototyping</span>
+                    </div>
+                    <div class="job-footer">
+                        <div class="job-budget">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <strong>$35 – $55 / hr</strong>
+                        </div>
+                        <div class="job-meta">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Posted 5h ago
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                7 proposals
+                            </span>
+                        </div>
+                        <button class="btn-apply">Apply Now</button>
+                    </div>
+                </div>
+
+                <!-- Job Card 3 -->
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="job-client">
+                            <div class="client-logo cl-teal">NV</div>
+                            <div>
+                                <span class="client-name">Nova Digital</span>
+                                <span class="client-rating">★ 5.0 <em>(120 reviews)</em></span>
+                            </div>
+                        </div>
+                        <div class="job-badges">
+                            <span class="jbadge">Fixed Price</span>
+                        </div>
+                    </div>
+                    <h3 class="job-title">Full-Stack Developer — PHP/Symfony + Vue.js</h3>
+                    <p class="job-desc">Build and maintain RESTful APIs and integrate with a Vue.js frontend. The system handles HR data and payroll. Strong database design skills required.</p>
+                    <div class="job-tags">
+                        <span class="skill-tag">Symfony</span>
+                        <span class="skill-tag">PHP</span>
+                        <span class="skill-tag">Vue.js</span>
+                        <span class="skill-tag">MySQL</span>
+                    </div>
+                    <div class="job-footer">
+                        <div class="job-budget">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <strong>$1,800 – $3,200</strong>
+                        </div>
+                        <div class="job-meta">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Posted 1d ago
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                21 proposals
+                            </span>
+                        </div>
+                        <button class="btn-apply">Apply Now</button>
+                    </div>
+                </div>
+
+                <!-- Job Card 4 -->
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="job-client">
+                            <div class="client-logo cl-red">AX</div>
+                            <div>
+                                <span class="client-name">Axion Media</span>
+                                <span class="client-rating">★ 4.6 <em>(58 reviews)</em></span>
+                            </div>
+                        </div>
+                        <div class="job-badges">
+                            <span class="jbadge">Hourly</span>
+                        </div>
+                    </div>
+                    <h3 class="job-title">Content Writer — Tech &amp; SaaS Niche</h3>
+                    <p class="job-desc">We're looking for a skilled content writer to produce long-form blog posts (1,500–3,000 words) on software, productivity, and startup topics. SEO knowledge is a plus.</p>
+                    <div class="job-tags">
+                        <span class="skill-tag">Content Writing</span>
+                        <span class="skill-tag">SEO</span>
+                        <span class="skill-tag">Tech Blogs</span>
+                    </div>
+                    <div class="job-footer">
+                        <div class="job-budget">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <strong>$20 – $30 / hr</strong>
+                        </div>
+                        <div class="job-meta">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Posted 2d ago
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                5 proposals
+                            </span>
+                        </div>
+                        <button class="btn-apply">Apply Now</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+
+                <!-- Activity -->
+                <div class="side-card">
+                    <h3 class="side-title">Your Activity</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon ai-blue">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            </div>
+                            <div class="activity-info">
+                                <span class="activity-label">Proposals Sent</span>
+                                <strong>3</strong>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon ai-green">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div class="activity-info">
+                                <span class="activity-label">Jobs Completed</span>
+                                <strong>0</strong>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon ai-yellow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div class="activity-info">
+                                <span class="activity-label">Rating</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="side-card">
+                    <h3 class="side-title">Popular Skills</h3>
+                    <div class="skill-cloud">
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">PHP</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Laravel</span>
+                        <span class="skill-tag">Flutter</span>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+
+</div>
+
+<script src="view/dashboard.js"></script>
+<script src="view/client_home.js"></script>
+</body>
+</html>

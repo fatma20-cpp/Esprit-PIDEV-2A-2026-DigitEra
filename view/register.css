@@ -1,0 +1,34 @@
+/* Register page extras — extends login.css */
+
+.login-container--wide {
+    max-width: 500px;
+}
+
+.two-col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .two-col-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.photo-browse-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: .45rem 1rem;
+    font-size: .875rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.photo-browse-btn:hover {
+    background: var(--bg-hover);
+}
