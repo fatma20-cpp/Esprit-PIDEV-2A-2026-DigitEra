@@ -1,98 +1,161 @@
 <?php
-require_once '../Controller/OffreController.php';
-require_once '../Model/Offre.php';
+include '../Controller/OffreController.php';
 
-$errors = [
-    "title" => "",
-    "description" => "",
-    "category" => "",
-    "budget" => "",
-    "deadline" => ""
-];
+$offerC = new OffreController();
 
-$success = "";
+// 🔥 DELETE FIX
+if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = (int) $_GET['delete'];
 
-    $title = $_POST["title"] ?? "";
-    $description = $_POST["description"] ?? "";
-    $category = $_POST["category"] ?? "";
-    $budget = $_POST["budget"] ?? "";
-    $deadline = $_POST["deadline"] ?? "";
-
-    $isValid = true;
-
-    // TITLE
-    if (empty($title)) {
-        $errors["title"] = "Title is required";
-        $isValid = false;
+    if ($offerC->supprimerOffer($id)) {
+        header("Location: ListOfferAdmin.php");
+        exit();
+    } else {
+        echo "Delete failed";
     }
-
-    // DESCRIPTION
-    if (empty($description)) {
-        $errors["description"] = "Description is required";
-        $isValid = false;
-    }
-
-    // CATEGORY
-    if (empty($category)) {
-        $errors["category"] = "Category is required";
-        $isValid = false;
-    }
-
-    // BUDGET
-    if (empty($budget)) {
-        $errors["budget"] = "Budget is required";
-        $isValid = false;
-    } elseif (!is_numeric($budget) || $budget <= 0) {
-        $errors["budget"] = "Budget must be a positive number";
-        $isValid = false;
-    }
-
-    // DEADLINE
-    if (empty($deadline)) {
-        $errors["deadline"] = "Deadline is required";
-        $isValid = false;
-    } elseif (strtotime($deadline) < time()) {
-        $errors["deadline"] = "Deadline must be in the future";
-        $isValid = false;
-    }
-
-    if ($isValid) {
-
-    $offer = new Offre(
-        $title,
-        $description,
-        $budget,
-         1// company_id
-    );
-
-    $offer->setCategory($category);
-    $offer->setDeadline($deadline);
-
-    $offerC = new OffreController();
-    $offerC->ajouterOffer($offer);
-
-    // 🔥 REDIRECT AFTER SUCCESS
-    header("Location: ListOffer.php");
-    exit();
 }
-}
+
+$list = $offerC->afficheroffres();
 ?>
-
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Create Offer</title>
+    <meta charset="UTF-8">
+    <title>Offers</title>
     <link rel="stylesheet" href="../css/templatemo-daynight-style.css">
-
     <style>
-    .error-text {
-        color: #ef4444;
-        font-size: 12px;
-        margin-top: 4px;
+    .meta-line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .meta-line svg {
+        width: 16px;
+        height: 16px;
+        stroke: #64748b;
+        fill: none;
+        stroke-width: 2;
+    }
+
+    .stat-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: white;
+        fill: none;
+        stroke-width: 2;
+    }
+
+    /* CARD SOFT STYLE */
+    .card {
+        border-radius: 14px;
+        border: 1px solid #e5e7eb;
+        background: #ffffff;
+        padding: 18px;
+        transition: all 0.25s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+        border-color: #d1d5db;
+    }
+
+    /* TITLE */
+    .stat-title {
+        font-weight: 600;
+        font-size: 15px;
+        color: #111827;
+    }
+
+    /* CATEGORY (MAKE IT LOOK LIKE TAG) */
+    .stat-category {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 500;
+        color: #2563eb;
+        background: #eff6ff;
+        padding: 4px 10px;
+        border-radius: 999px;
+        margin: 8px 0;
+    }
+
+    /* DESCRIPTION */
+    .stat-description {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 10px;
+    }
+
+    /* META LINES */
+    .meta-line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #374151;
+    }
+
+    /* ICONS */
+    .meta-line svg {
+        width: 15px;
+        height: 15px;
+        stroke: #9ca3af;
+        stroke-width: 2;
+        fill: none;
+    }
+
+    /* MAKE PRICE STAND OUT */
+    .meta-line strong {
+        color: #111827;
+        font-weight: 600;
+    }
+
+    /* ACTIONS */
+    .card .btn {
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    /* EDIT BUTTON */
+    .btn-secondary {
+        background: #f3f4f6;
+        color: #111827;
+    }
+
+    .btn-secondary:hover {
+        background: #e5e7eb;
+    }
+
+    /* DELETE BUTTON */
+    .btn-danger {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .btn-danger:hover {
+        background: #fecaca;
+    }
+
+    /* HEADER ICON SOFT */
+    .stat-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: #f3f4f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-icon svg {
+        width: 18px;
+        height: 18px;
+        stroke: #374151;
     }
     </style>
 </head>
@@ -101,7 +164,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="app-container">
 
-        <!-- NAV -->
         <nav class="top-nav">
             <div class="nav-container">
                 <div class="nav-left">
@@ -148,15 +210,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <line x1="6" y1="20" x2="6" y2="14" />
                                 </svg>Analytics</a>
                         </div>
-                        <div class="nav-item active">
-                            <a href="ListOffer.php" class="nav-link active"><svg viewBox="0 0 24 24" fill="none"
+                        <div class="nav-item">
+                            <a href="ListOffer.php" class="nav-link"><svg viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="3" />
                                     <path
                                         d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
                                 </svg>Offers</a>
                         </div>
-                                                 <div class="nav-item">
+                         <div class="nav-item">
                             <a href="ListOfferAdmin.php" class="nav-link active"><svg viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="3" />
@@ -215,118 +277,104 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </nav>
 
-
-
-        <!-- FORM -->
+        <!-- MAIN -->
         <main class="main-content">
 
-            <div class="page-header">
-                <div style="margin-bottom:15px;">
-                    <a href="ListOffer.php" class="btn btn-ghost">
-                        ← Back to Offers
-                    </a>
+            <!-- HEADER -->
+            <div class="page-header-offers">
+                <div>
+                    <h1 class="greeting">Client Offers</h1>
+                    <p class="greeting-sub">Manage your published offers</p>
                 </div>
-                <h1 class="greeting">Create Offer</h1>
-                <p class="greeting-sub">Fill all fields to publish your project</p>
 
-
+                <a href="CreateOffer.php" class="btn btn-primary">
+                    + Add Offer
+                </a>
             </div>
 
-            <div class="offer-grid">
+            <!-- GRID -->
+            <div class="stats-grid">
+
+                <?php foreach ($list as $offer) { ?>
 
                 <div class="card">
 
-                    <h2 class="settings-title">Offer Details</h2>
-                    <p class="settings-desc">All fields are required</p>
-
-                    <?php if ($success != "") { ?>
-                    <div class="success-box"><?php echo $success; ?></div>
-                    <?php } ?>
-
-                    <form method="POST">
-
-                        <div class="create-offer-from">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" name="title" class="form-input"
-                                        value="<?php echo htmlspecialchars($_POST['title'] ?? ''); ?>">
-                                    <div class="error-text"><?php echo $errors["title"]; ?></div>
-                                </div>
-
-                                <!-- DESCRIPTION -->
-                                <div class="form-group">
-                                    <label class="form-label">Description</label>
-                                    <textarea name="description" class="form-input"
-                                        style="min-height:160px;"><?php echo htmlspecialchars($_POST['description'] ?? ''); ?></textarea>
-                                    <div class="error-text"><?php echo $errors["description"]; ?></div>
-                                </div>
-
-                            </div> <!-- TITLE -->
-
-
-                            <div class="row">
-                                <!-- CATEGORY -->
-
-                                <!-- BUDGET -->
-                                <div class="form-group">
-                                    <label class="form-label">Budget (DT)</label>
-                                    <input type="text" name="budget" class="form-input"
-                                        value="<?php echo htmlspecialchars($_POST['budget'] ?? ''); ?>">
-                                    <div class="error-text"><?php echo $errors["budget"]; ?></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Category</label>
-                                    <select name="category" class="form-input">
-                                        <option value="">Select category</option>
-                                        <option value="DEV">Development</option>
-                                        <option value="UI">UI/UX</option>
-                                        <option value="MARKETING">Marketing</option>
-                                        <option value="DATA">Data</option>
-                                    </select>
-                                    <div class="error-text"><?php echo $errors["category"]; ?></div>
-                                </div>
-
-                                <!-- DEADLINE -->
-                                <div class="form-group">
-                                    <label class="form-label">Deadline</label>
-                                    <input type="date" name="deadline" class="form-input"
-                                        value="<?php echo htmlspecialchars($_POST['deadline'] ?? ''); ?>">
-                                    <div class="error-text"><?php echo $errors["deadline"]; ?></div>
-                                </div>
-                            </div>
-
-
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <!-- BOX ICON -->
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="7" width="18" height="13" rx="2" />
+                                <path d="M16 3v4M8 3v4" />
+                            </svg>
                         </div>
 
+                        <div class="stat-title">
+                            <?php echo htmlspecialchars($offer['title']); ?>
+                        </div>
+                    </div>
 
+                    <div class="stat-category">
+                        <?php echo htmlspecialchars($offer['category'] ?? 'General'); ?>
+                    </div>
 
+                    <div class="stat-description">
+                        <?php echo htmlspecialchars($offer['description']); ?>
+                    </div>
 
-                        <div>
-                            <!-- BUTTON -->
-                            <div style="margin-top:20px; display:flex; gap:10px;">
+                    <div class="offer-meta">
 
-                                <button type="submit" class="btn btn-primary">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                        <path d="M12 5v14M5 12h14" />
-                                    </svg>
-                                    Create Offer
-                                </button>
-
-                                <a href="ListOffer.php" class="btn btn-ghost">Cancel</a>
-
-                            </div>
+                        <!-- BUDGET -->
+                        <div class="meta-line">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M12 7v10M9 10h6" />
+                            </svg>
+                            <strong><?php echo $offer['budget']; ?> DT</strong>
                         </div>
 
+                        <!-- DEADLINE -->
+                        <div class="meta-line">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M12 7v5l3 3" />
+                            </svg>
+                            <span class="deadline">
+                                <?php echo $offer['deadline'] ?? '-'; ?>
+                            </span>
+                        </div>
 
-                    </form>
+                        <!-- CREATED -->
+                        <div class="meta-line">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="5" width="18" height="16" rx="2" />
+                                <path d="M16 3v4M8 3v4" />
+                            </svg>
+                            <?php echo $offer['created_at'] ?? '-'; ?>
+                        </div>
+
+                    </div>
+
+                    <!-- ACTIONS -->
+                    <div style="margin-top:20px; display:flex; gap:10px;">
+
+                        <a href="UpdateOffer.php?id=<?php echo $offer['id_offre']; ?>" class="btn btn-secondary">
+                            Edit
+                        </a>
+
+                        <a href="ListOfferAdmin.php?delete=<?php echo urlencode($offer['id_offre']); ?>"
+                            class="btn btn-danger" onclick="return confirm('Delete this offer?');">
+                            Delete
+                        </a>
+
+                    </div>
 
                 </div>
+
+                <?php } ?>
 
             </div>
 
         </main>
-
 
     </div>
     <script src="../js/templatemo-daynight-script.js"></script>

@@ -28,8 +28,7 @@ $list = $offerC->afficheroffres();
             </a>
             <ul class="nav-links">
                 <li><a href="#home" class="active">Home</a></li>
-                <li><a href="./UserDashboard.html">Account</a></li>
-                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#dashboard">Platform Preview</a></li>
                 <li><a href="#freelancers">Freelancers</a></li>
                 <li><a href="#offers">Offers</a></li>
                 <li><a href="#contact">Contact</a></li>
