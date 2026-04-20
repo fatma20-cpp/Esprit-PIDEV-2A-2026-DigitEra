@@ -1,25 +1,32 @@
 <?php
 class Demande {
-    private $id;
-    private $id_offre;
-    private $nom;
-    private $message;
 
-    public function __construct($id, $id_offre, $nom, $message) {
-        $this->id = $id;
-        $this->id_offre = $id_offre;
-        $this->nom = $nom;
+    private $id_demande;
+    private $id_offer;
+    private $id_freelancer;
+    private $price;
+    private $delivery_time;
+    private $message;
+    private $status;
+    private $created_at;
+
+    function __construct($id_offer, $id_freelancer, $price, $delivery_time, $message) {
+        $this->id_offer = $id_offer;
+        $this->id_freelancer = $id_freelancer;
+        $this->price = $price;
+        $this->delivery_time = $delivery_time;
         $this->message = $message;
     }
 
-    // Getters
-    public function getId() { return $this->id; }
-    public function getIdOffre() { return $this->id_offre; }
-    public function getNom() { return $this->nom; }
+    // GETTERS
+    public function getOfferId() { return $this->id_offer; }
+    public function getFreelancerId() { return $this->id_freelancer; }
+    public function getPrice() { return $this->price; }
+    public function getDeliveryTime() { return $this->delivery_time; }
     public function getMessage() { return $this->message; }
+    public function getStatus() { return $this->status; }
 
-    // Setters
-    public function setNom($nom) { $this->nom = $nom; }
-    public function setMessage($message) { $this->message = $message; }
+    // SETTERS
+    public function setStatus($status) { $this->status = $status; }
 }
 ?>

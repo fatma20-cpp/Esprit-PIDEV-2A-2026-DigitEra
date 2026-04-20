@@ -158,7 +158,10 @@ $list = $offerC->afficheroffres();
 
             <div class="stats-grid">
 
-                <?php foreach ($list as $offer) { ?>
+                <?php foreach ($list as $offer) {
+                    ?>
+
+
 
                 <div class="stat-card offer-card offer-item">
 
@@ -170,6 +173,7 @@ $list = $offerC->afficheroffres();
 
                         <div class="stat-title">
                             <?php echo htmlspecialchars($offer['title']); ?>
+                            ---- <?php echo htmlspecialchars($offer['id_offer']); ?>
                         </div>
                     </div>
 
@@ -213,8 +217,7 @@ $list = $offerC->afficheroffres();
 
                     <!-- ACTION BUTTON -->
                     <div class="actions">
-
-                        <a href="create_demande.php?id_offer=<?php echo $offer['id_offer']; ?>" class="btn-apply">
+                        <a href="CreateDemande.php?id=<?php echo $offer['id_offre']; ?>" class="btn-apply">
                             <i class="fa-solid fa-paper-plane"></i> Apply
                         </a>
 
@@ -222,7 +225,8 @@ $list = $offerC->afficheroffres();
 
                 </div>
 
-                <?php } ?>
+                <?php 
+                } ?>
 
             </div>
 
