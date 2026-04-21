@@ -3,115 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Work — Digitera</title>
+    <title>Home — Digitera</title>
     <link rel="stylesheet" href="view/client_home.css">
 </head>
 <body>
-<div class="app-container">
 
-    <!-- TOP NAV (same structure as dashboard/profile) -->
-    <nav class="top-nav">
-        <div class="nav-container">
-            <div class="nav-left">
-                <a href="index.php?page=client_home" class="logo">
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                    </div>
-                    Digitera
-                </a>
-                <div class="nav-menu">
-                    <a href="index.php?page=client_home" class="nav-link active">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-                        </svg>
-                        Find Work
-                    </a>
-                    <a href="#" class="nav-link">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-                        </svg>
-                        My Jobs
-                    </a>
-                    <a href="#" class="nav-link">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                        </svg>
-                        Messages
-                    </a>
-                </div>
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav id="clientNav">
+    <div class="nav-container">
+        <a href="index.php?page=client_home" class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0a0e27" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
             </div>
+            <span class="logo-text">Digitera</span>
+        </a>
 
-            <div class="nav-right">
-                <!-- Theme toggle (same as dashboard) -->
-                <div class="theme-toggle">
-                    <button class="theme-btn active" id="btn-snow" title="Light">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"/>
-                            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                        </svg>
-                    </button>
-                    <button class="theme-btn" id="btn-carbon" title="Dark">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                        </svg>
-                    </button>
-                </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.php?page=client_home" class="active">Home</a></li>
+            <li><a href="#">Réclamation</a></li>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">Offre</a></li>
+            <li><a href="#">Formation</a></li>
+        </ul>
 
-                <!-- User (clickable → profile) -->
-                <a href="index.php?page=profile" class="user-menu" title="Edit Profile">
-                    <div class="user-avatar">__INITIALS__</div>
-                    <span class="user-name">__FULLNAME__</span>
-                </a>
-
-                <!-- Logout -->
-                <a href="index.php?page=client_home&logout=1" class="btn-logout" title="Logout">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                        <polyline points="16 17 21 12 16 7"/>
-                        <line x1="21" y1="12" x2="9" y2="12"/>
-                    </svg>
-                </a>
-            </div>
+        <div class="nav-right">
+            <a href="index.php?page=profile" class="user-chip" title="My Profile">
+                <div class="user-avatar-nav">__NAV_AVATAR__</div>
+                <span class="user-name-nav">__FULLNAME__</span>
+            </a>
+            <a href="index.php?page=client_home&logout=1" class="btn-nav-logout" title="Logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+            </a>
         </div>
-    </nav>
 
-    <!-- HERO BANNER -->
-    <div class="hero">
-        <div class="hero-inner">
-            <div class="hero-text">
-                <p class="hero-label">Welcome back, __FIRSTNAME__ 👋</p>
-                <h1 class="hero-title">Find your next <em>great project</em></h1>
-                <p class="hero-sub">Connect with top clients and grow your freelance career on Digitera.</p>
-            </div>
-            <div class="hero-stats">
-                <div class="hstat">
-                    <span class="hstat-value">2,400+</span>
-                    <span class="hstat-label">Active Jobs</span>
-                </div>
-                <div class="hstat-sep"></div>
-                <div class="hstat">
-                    <span class="hstat-value">840</span>
-                    <span class="hstat-label">New Today</span>
-                </div>
-                <div class="hstat-sep"></div>
-                <div class="hstat">
-                    <span class="hstat-value">98%</span>
-                    <span class="hstat-label">Satisfaction</span>
-                </div>
-            </div>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="page-content">
+    <ul class="nav-links-mobile" id="navLinksMobile">
+        <li><a href="index.php?page=client_home" class="active">Find Work</a></li>
+        <li><a href="#">Réclamation</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Offre</a></li>
+        <li><a href="#">Formation</a></li>
+    </ul>
+</nav>
 
-        <!-- FILTER BAR -->
-        <div class="filter-bar">
-            <div class="filter-tags">
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="ch-hero" id="home">
+    <div class="ch-hero-bg"></div>
+    <div class="geometric-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+        <div class="shape shape5"></div>
+        <div class="shape shape6"></div>
+        <div class="neon-line neon-line1"></div>
+        <div class="neon-line neon-line2"></div>
+    </div>
+
+    <div class="ch-hero-inner">
+        <div class="ch-hero-text">
+            <p class="ch-hero-label">Welcome back, __FIRSTNAME__ 👋</p>
+            <h1>Find Your Next<br>Great Project</h1>
+            <p>Connect with top clients and grow your freelance career on Digitera. Real-time job listings, smart matching, and secure payments.</p>
+            <a href="#jobs" class="cta-button">Browse Jobs</a>
+        </div>
+
+        <div class="ch-hero-visual">
+            <div class="city-container">
+                <div class="building b1"><div class="building-fill"></div><div class="building-windows"></div></div>
+                <div class="building b2"><div class="building-fill"></div><div class="building-windows"></div></div>
+                <div class="building b3"><div class="building-fill"></div><div class="building-windows"></div></div>
+                <div class="building b4"><div class="building-fill"></div><div class="building-windows"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════ STATS ══════════════════ -->
+<section class="ch-stats-section" id="dashboard">
+    <div class="dashboard-container">
+        <h2 class="section-title">Dashboard Overview</h2>
+        <div class="ch-stats-grid">
+            <div class="ch-stat-card">
+                <div class="ch-stat-header">
+                    <div class="ch-stat-icon">💼</div>
+                    <div class="ch-stat-title">Active Jobs</div>
+                </div>
+                <div class="ch-stat-value">2,400+</div>
+                <div class="ch-stat-desc">Open positions available right now across all categories and skill levels.</div>
+                <div class="ch-stat-chart"><canvas id="sc1"></canvas></div>
+            </div>
+            <div class="ch-stat-card">
+                <div class="ch-stat-header">
+                    <div class="ch-stat-icon">👥</div>
+                    <div class="ch-stat-title">Active Clients</div>
+                </div>
+                <div class="ch-stat-value">18.5K</div>
+                <div class="ch-stat-desc">Verified clients actively hiring freelancers on the platform this month.</div>
+                <div class="ch-stat-chart"><canvas id="sc2"></canvas></div>
+            </div>
+            <div class="ch-stat-card">
+                <div class="ch-stat-header">
+                    <div class="ch-stat-icon">🎯</div>
+                    <div class="ch-stat-title">Success Rate</div>
+                </div>
+                <div class="ch-stat-value">94.3%</div>
+                <div class="ch-stat-desc">Project completion rate across all freelancers — industry-leading reliability.</div>
+                <div class="ch-stat-chart"><canvas id="sc3"></canvas></div>
+            </div>
+            <div class="ch-stat-card">
+                <div class="ch-stat-header">
+                    <div class="ch-stat-icon">🚀</div>
+                    <div class="ch-stat-title">New Today</div>
+                </div>
+                <div class="ch-stat-value">840</div>
+                <div class="ch-stat-desc">Fresh job listings posted in the last 24 hours — refresh often to catch the latest.</div>
+                <div class="ch-stat-chart"><canvas id="sc4"></canvas></div>
+            </div>
+            <div class="ch-stat-card">
+                <div class="ch-stat-header">
+                    <div class="ch-stat-icon">💰</div>
+                    <div class="ch-stat-title">Top Earning</div>
+                </div>
+                <div class="ch-stat-value">$12.4K</div>
+                <div class="ch-stat-desc">Highest monthly earnings by a freelancer on Digitera this year.</div>
+                <div class="ch-stat-chart"><canvas id="sc5"></canvas></div>
+            </div>
+            <div class="ch-stat-card">
+                <div class="ch-stat-header">
+                    <div class="ch-stat-icon">⚡</div>
+                    <div class="ch-stat-title">Avg Response</div>
+                </div>
+                <div class="ch-stat-value">1.2h</div>
+                <div class="ch-stat-desc">Average time for clients to respond to submitted proposals on the platform.</div>
+                <div class="ch-stat-chart"><canvas id="sc6"></canvas></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════ JOBS / ANALYTICS ══════════════════ -->
+<section class="ch-analytics-section" id="jobs">
+    <div class="dashboard-container">
+        <h2 class="section-title">Jobs For You</h2>
+
+        <!-- Metrics strip -->
+        <div class="ch-metrics-grid">
+            <div class="ch-metric-item"><div class="ch-metric-value">2.4M</div><div class="ch-metric-label">Projects Completed</div></div>
+            <div class="ch-metric-item"><div class="ch-metric-value">156K</div><div class="ch-metric-label">Active Clients</div></div>
+            <div class="ch-metric-item"><div class="ch-metric-value">4.8★</div><div class="ch-metric-label">Avg Rating</div></div>
+            <div class="ch-metric-item"><div class="ch-metric-value">68%</div><div class="ch-metric-label">Repeat Hire Rate</div></div>
+            <div class="ch-metric-item"><div class="ch-metric-value">89</div><div class="ch-metric-label">NPS Score</div></div>
+            <div class="ch-metric-item"><div class="ch-metric-value">3.2K</div><div class="ch-metric-label">Posted Today</div></div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="ch-filter-bar">
+            <div class="ch-filter-tags">
                 <button class="ftag active">All Jobs</button>
                 <button class="ftag">Design</button>
                 <button class="ftag">Development</button>
@@ -126,99 +184,79 @@
             </select>
         </div>
 
-        <div class="content-grid">
+        <div class="ch-content-grid">
 
-            <!-- JOB LISTINGS -->
-            <div class="jobs-column">
-                <div class="section-header">
-                    <h2>Jobs for You</h2>
-                    <span class="badge-count">24 jobs</span>
-                </div>
+            <!-- JOB CARDS -->
+            <div class="ch-jobs-col">
 
-                <!-- Job Card 1 -->
+                <!-- Card 1 – Featured -->
                 <div class="job-card featured">
+                    <div class="featured-badge">⚡ Featured</div>
                     <div class="job-top">
                         <div class="job-client">
-                            <div class="client-logo cl-blue">TC</div>
+                            <div class="client-logo cl-cyan">TC</div>
                             <div>
                                 <span class="client-name">TechCorp Inc.</span>
                                 <span class="client-rating">★ 4.9 <em>(87 reviews)</em></span>
                             </div>
                         </div>
-                        <div class="job-badges">
-                            <span class="jbadge jbadge-green">Featured</span>
-                            <span class="jbadge">Fixed Price</span>
-                        </div>
+                        <span class="jbadge">Fixed Price</span>
                     </div>
                     <h3 class="job-title">Senior React Developer — Dashboard Redesign</h3>
                     <p class="job-desc">We need an experienced React developer to redesign our analytics dashboard. Must be proficient with D3.js, Tailwind, and modern state management (Zustand preferred).</p>
                     <div class="job-tags">
                         <span class="skill-tag">React</span>
                         <span class="skill-tag">D3.js</span>
-                        <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">Tailwind</span>
                         <span class="skill-tag">Zustand</span>
                     </div>
                     <div class="job-footer">
                         <div class="job-budget">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            <strong>$2,500 – $4,000</strong>
+                            <strong>$3,500 – $5,000</strong>
                         </div>
                         <div class="job-meta">
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                Posted 2h ago
-                            </span>
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                                12 proposals
-                            </span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Posted 3h ago</span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>12 proposals</span>
                         </div>
                         <button class="btn-apply">Apply Now</button>
                     </div>
                 </div>
 
-                <!-- Job Card 2 -->
+                <!-- Card 2 -->
                 <div class="job-card">
                     <div class="job-top">
                         <div class="job-client">
-                            <div class="client-logo cl-purple">MX</div>
+                            <div class="client-logo cl-pink">DS</div>
                             <div>
-                                <span class="client-name">Maximo Studios</span>
-                                <span class="client-rating">★ 4.7 <em>(43 reviews)</em></span>
+                                <span class="client-name">DesignStudio</span>
+                                <span class="client-rating">★ 4.7 <em>(44 reviews)</em></span>
                             </div>
                         </div>
-                        <div class="job-badges">
-                            <span class="jbadge jbadge-orange">Urgent</span>
-                            <span class="jbadge">Hourly</span>
-                        </div>
+                        <span class="jbadge">Hourly</span>
                     </div>
-                    <h3 class="job-title">UI/UX Designer for Mobile App — Fintech Startup</h3>
-                    <p class="job-desc">Looking for a talented designer to create wireframes and high-fidelity mockups for our mobile banking app. Figma expertise required. 2–3 weeks engagement.</p>
+                    <h3 class="job-title">UI/UX Designer — Mobile App Flows</h3>
+                    <p class="job-desc">Looking for a creative UI/UX designer to craft user flows and prototypes for a fintech mobile app. Experience with Figma and design systems is required.</p>
                     <div class="job-tags">
                         <span class="skill-tag">Figma</span>
-                        <span class="skill-tag">Mobile UI</span>
+                        <span class="skill-tag">UI/UX</span>
+                        <span class="skill-tag">Mobile</span>
                         <span class="skill-tag">Prototyping</span>
                     </div>
                     <div class="job-footer">
                         <div class="job-budget">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            <strong>$35 – $55 / hr</strong>
+                            <strong>$45 – $65 / hr</strong>
                         </div>
                         <div class="job-meta">
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                Posted 5h ago
-                            </span>
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                                7 proposals
-                            </span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Posted 6h ago</span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>7 proposals</span>
                         </div>
                         <button class="btn-apply">Apply Now</button>
                     </div>
                 </div>
 
-                <!-- Job Card 3 -->
+                <!-- Card 3 -->
                 <div class="job-card">
                     <div class="job-top">
                         <div class="job-client">
@@ -228,9 +266,7 @@
                                 <span class="client-rating">★ 5.0 <em>(120 reviews)</em></span>
                             </div>
                         </div>
-                        <div class="job-badges">
-                            <span class="jbadge">Fixed Price</span>
-                        </div>
+                        <span class="jbadge">Fixed Price</span>
                     </div>
                     <h3 class="job-title">Full-Stack Developer — PHP/Symfony + Vue.js</h3>
                     <p class="job-desc">Build and maintain RESTful APIs and integrate with a Vue.js frontend. The system handles HR data and payroll. Strong database design skills required.</p>
@@ -246,20 +282,14 @@
                             <strong>$1,800 – $3,200</strong>
                         </div>
                         <div class="job-meta">
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                Posted 1d ago
-                            </span>
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                                21 proposals
-                            </span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Posted 1d ago</span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>21 proposals</span>
                         </div>
                         <button class="btn-apply">Apply Now</button>
                     </div>
                 </div>
 
-                <!-- Job Card 4 -->
+                <!-- Card 4 -->
                 <div class="job-card">
                     <div class="job-top">
                         <div class="job-client">
@@ -269,9 +299,7 @@
                                 <span class="client-rating">★ 4.6 <em>(58 reviews)</em></span>
                             </div>
                         </div>
-                        <div class="job-badges">
-                            <span class="jbadge">Hourly</span>
-                        </div>
+                        <span class="jbadge">Hourly</span>
                     </div>
                     <h3 class="job-title">Content Writer — Tech &amp; SaaS Niche</h3>
                     <p class="job-desc">We're looking for a skilled content writer to produce long-form blog posts (1,500–3,000 words) on software, productivity, and startup topics. SEO knowledge is a plus.</p>
@@ -286,30 +314,23 @@
                             <strong>$20 – $30 / hr</strong>
                         </div>
                         <div class="job-meta">
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                Posted 2d ago
-                            </span>
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                                5 proposals
-                            </span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Posted 2d ago</span>
+                            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>5 proposals</span>
                         </div>
                         <button class="btn-apply">Apply Now</button>
                     </div>
                 </div>
 
-            </div>
+            </div><!-- /.ch-jobs-col -->
 
-            <!-- SIDEBAR -->
-            <aside class="sidebar">
+            <!-- SIDE PANEL -->
+            <aside class="ch-side-panel">
 
-                <!-- Activity -->
                 <div class="side-card">
-                    <h3 class="side-title">Your Activity</h3>
+                    <h3 class="side-title">📊 Your Activity</h3>
                     <div class="activity-list">
                         <div class="activity-item">
-                            <div class="activity-icon ai-blue">
+                            <div class="activity-icon ai-cyan">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                             </div>
                             <div class="activity-info">
@@ -338,9 +359,34 @@
                     </div>
                 </div>
 
-                <!-- Skills -->
                 <div class="side-card">
-                    <h3 class="side-title">Popular Skills</h3>
+                    <h3 class="side-title">📈 Activity Trend</h3>
+                    <div class="side-chart-wrap">
+                        <svg viewBox="0 0 300 120" class="side-chart-svg">
+                            <defs>
+                                <linearGradient id="sideGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00ffcc;stop-opacity:0.4"/>
+                                    <stop offset="100%" style="stop-color:#00ffcc;stop-opacity:0"/>
+                                </linearGradient>
+                            </defs>
+                            <line x1="0" y1="30"  x2="300" y2="30"  stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            <line x1="0" y1="60"  x2="300" y2="60"  stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            <line x1="0" y1="90"  x2="300" y2="90"  stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            <path d="M 0,95 L 50,78 L 100,62 L 150,72 L 200,42 L 250,52 L 300,28 L 300,120 L 0,120 Z" fill="url(#sideGrad)"/>
+                            <path d="M 0,95 L 50,78 L 100,62 L 150,72 L 200,42 L 250,52 L 300,28" stroke="#00ffcc" stroke-width="2" fill="none" filter="drop-shadow(0 0 6px rgba(0,255,204,0.5))"/>
+                            <circle cx="0"   cy="95" r="3" fill="#00ffcc"/>
+                            <circle cx="50"  cy="78" r="3" fill="#00ffcc"/>
+                            <circle cx="100" cy="62" r="3" fill="#00ffcc"/>
+                            <circle cx="150" cy="72" r="3" fill="#00ffcc"/>
+                            <circle cx="200" cy="42" r="3" fill="#00ffcc"/>
+                            <circle cx="250" cy="52" r="3" fill="#00ffcc"/>
+                            <circle cx="300" cy="28" r="3" fill="#00ffcc"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="side-card">
+                    <h3 class="side-title">🚀 Popular Skills</h3>
                     <div class="skill-cloud">
                         <span class="skill-tag">JavaScript</span>
                         <span class="skill-tag">React</span>
@@ -355,12 +401,125 @@
                 </div>
 
             </aside>
+        </div><!-- /.ch-content-grid -->
+    </div>
+</section>
+
+<!-- ══════════════════ REPORTS ══════════════════ -->
+<section class="ch-reports-section" id="reports">
+    <div class="dashboard-container">
+        <h2 class="section-title">Platform Insights</h2>
+        <div class="ch-info-grid">
+            <div class="info-card">
+                <div class="info-icon">💼</div>
+                <h3 class="info-title">Business Intelligence</h3>
+                <div class="info-value">98.5%</div>
+                <p>Accuracy in matching freelancers to the right clients based on skills and history.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">📱</div>
+                <h3 class="info-title">Mobile Jobs</h3>
+                <div class="info-value">2.4K</div>
+                <p>Mobile development jobs posted this month across all categories.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🌍</div>
+                <h3 class="info-title">Global Reach</h3>
+                <div class="info-value">150+</div>
+                <p>Countries with active clients hiring on Digitera right now.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🚀</div>
+                <h3 class="info-title">Performance Index</h3>
+                <div class="info-value">847</div>
+                <p>Comprehensive performance scoring across all platform metrics this quarter.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">⚡</div>
+                <h3 class="info-title">Response Time</h3>
+                <div class="info-value">1.2h</div>
+                <p>Average client response time to submitted freelancer proposals.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">📊</div>
+                <h3 class="info-title">Projects Posted</h3>
+                <div class="info-value">12K</div>
+                <p>Total projects posted this month across all skill categories on Digitera.</p>
+            </div>
         </div>
     </div>
+</section>
 
-</div>
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<section class="ch-contact-section" id="contact">
+    <div class="dashboard-container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="ch-contact-grid">
+            <div class="ch-contact-form">
+                <h3>Send us a Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="c-name">Full Name</label>
+                        <input type="text" id="c-name" name="name" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="c-email">Email Address</label>
+                        <input type="email" id="c-email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="c-subject">Subject</label>
+                        <input type="text" id="c-subject" name="subject" placeholder="How can we help?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="c-message">Message</label>
+                        <textarea id="c-message" name="message" placeholder="Tell us more..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Send Message</button>
+                </form>
+            </div>
 
-<script src="view/dashboard.js"></script>
+            <div class="ch-contact-info">
+                <h3>Contact Information</h3>
+                <a href="mailto:hello@digitera.com" class="contact-item" style="display:flex;text-decoration:none;color:inherit;">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h4>Email Address</h4>
+                        <p>hello@digitera.com<br>support@digitera.com</p>
+                    </div>
+                </a>
+                <a href="tel:+21600000000" class="contact-item" style="display:flex;text-decoration:none;color:inherit;">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-details">
+                        <h4>Phone Number</h4>
+                        <p>+216 00 000 000<br>Available 24/7</p>
+                    </div>
+                </a>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-details">
+                        <h4>Office Location</h4>
+                        <p>Tunis, Tunisia<br>North Africa Tech Hub</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🕒</div>
+                    <div class="contact-details">
+                        <h4>Business Hours</h4>
+                        <p>Monday – Friday: 9:00 AM – 6:00 PM<br>Weekend: Emergency support only</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+    <div class="footer-content">
+        <p class="copyright">© 2026 Digitera. All rights reserved. Connecting talent with opportunity.</p>
+    </div>
+</footer>
+
 <script src="view/client_home.js"></script>
 </body>
 </html>

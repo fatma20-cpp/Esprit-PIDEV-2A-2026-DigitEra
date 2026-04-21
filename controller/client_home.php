@@ -8,8 +8,13 @@ if (isset($_GET['logout'])) logout();
 
 $currentUser = currentUser();
 
-$initials = strtoupper(substr($currentUser['prenom'],0,1).substr($currentUser['nom'],0,1));
+$initials  = strtoupper(substr($currentUser['prenom'],0,1).substr($currentUser['nom'],0,1));
 $fullName  = htmlspecialchars($currentUser['prenom'].' '.$currentUser['nom']);
+
+$photoPath = !empty($currentUser['photo']) ? htmlspecialchars($currentUser['photo']) : '';
+$navAvatarHtml = $photoPath
+    ? '<img src="' . $photoPath . '" alt="Profile photo" style="width:30px;height:30px;border-radius:7px;object-fit:cover;display:block;">'
+    : $initials;
 
 $roleBadge = [
     'admin'       => ['color'=>'#38BDF8','bg'=>'rgba(56,189,248,.12)'],
@@ -19,10 +24,10 @@ $roleBadge = [
 $badge = $roleBadge[$currentUser['role']] ?? $roleBadge['client'];
 
 $html = file_get_contents(__DIR__ . '/../view/client_home.html');
-$html = str_replace('__INITIALS__',   $initials,  $html);
-$html = str_replace('__FULLNAME__',   $fullName,  $html);
-$html = str_replace('__FIRSTNAME__',  htmlspecialchars($currentUser['prenom']), $html);
-$html = str_replace('__ROLE__',       ucfirst(htmlspecialchars($currentUser['role'])), $html);
-$html = str_replace('__ROLE_COLOR__', $badge['color'], $html);
-$html = str_replace('__ROLE_BG__',    $badge['bg'],    $html);
+$html = str_replace('__NAV_AVATAR__',  $navAvatarHtml, $html);
+$html = str_replace('__FULLNAME__',    $fullName,      $html);
+$html = str_replace('__FIRSTNAME__',   htmlspecialchars($currentUser['prenom']), $html);
+$html = str_replace('__ROLE__',        ucfirst(htmlspecialchars($currentUser['role'])), $html);
+$html = str_replace('__ROLE_COLOR__',  $badge['color'], $html);
+$html = str_replace('__ROLE_BG__',     $badge['bg'],    $html);
 echo $html;

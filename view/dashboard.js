@@ -43,3 +43,67 @@
         });
     });
 })();
+
+// ===== Sidebar Toggle =====
+(function () {
+    var sidebar       = document.getElementById('sidebar');
+    var toggleBtn     = document.getElementById('sidebarToggleBtn');
+    var overlay       = document.getElementById('sidebarOverlay');
+
+    if (!sidebar || !toggleBtn) return;
+
+    var isMobile = function () { return window.innerWidth <= 768; };
+
+    toggleBtn.addEventListener('click', function () {
+        if (isMobile()) {
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        } else {
+            sidebar.classList.toggle('collapsed');
+        }
+    });
+
+    if (overlay) {
+        overlay.addEventListener('click', function () {
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        });
+    }
+})();
+
+// ===== Sidebar Section Switching =====
+(function () {
+    var links    = document.querySelectorAll('.sidebar-link[data-section]');
+    var sections = document.querySelectorAll('.section-content');
+
+    // Activate section from URL hash or query param
+    var params  = new URLSearchParams(window.location.search);
+    var current = params.get('section') || 'users';
+    showSection(current);
+
+    links.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            var sec = link.getAttribute('data-section');
+            showSection(sec);
+            // Close mobile sidebar
+            var sidebar = document.getElementById('sidebar');
+            var overlay = document.getElementById('sidebarOverlay');
+            if (sidebar) sidebar.classList.remove('mobile-open');
+            if (overlay) overlay.classList.remove('active');
+            // Update URL without reload
+            var url = new URL(window.location.href);
+            url.searchParams.set('section', sec);
+            history.pushState({}, '', url.toString());
+        });
+    });
+
+    function showSection(name) {
+        sections.forEach(function (s) { s.classList.remove('active'); });
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var target = document.getElementById('section-' + name);
+        if (target) target.classList.add('active');
+        var activeLink = document.querySelector('.sidebar-link[data-section="' + name + '"]');
+        if (activeLink) activeLink.classList.add('active');
+    }
+})();

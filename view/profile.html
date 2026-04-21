@@ -6,212 +6,230 @@
     <title>My Profile — Digitera</title>
     <link rel="stylesheet" href="view/profile.css">
 </head>
-<body>
-<div class="app-container">
+<body class="profile-neon-page">
 
-    <!-- TOP NAV -->
-    <nav class="top-nav">
-        <div class="nav-container">
-            <div class="nav-left">
-                <a href="index.php?page=client_home" class="btn-back" title="Back">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="19" y1="12" x2="5" y2="12"/>
-                        <polyline points="12 19 5 12 12 5"/>
-                    </svg>
-                    Back
-                </a>
-                <a href="index.php?page=client_home" class="logo">
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                    </div>
-                    Digitera
-                </a>
+<!-- Animated background -->
+<div class="prof-bg-shapes" aria-hidden="true">
+    <div class="prof-shape s1"></div>
+    <div class="prof-shape s2"></div>
+    <div class="prof-shape s3"></div>
+    <div class="prof-neon-line nl1"></div>
+    <div class="prof-neon-line nl2"></div>
+</div>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav id="profNav">
+    <div class="prof-nav-container">
+        <a href="index.php?page=client_home" class="prof-logo">
+            <div class="prof-logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0a0e27" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
             </div>
-            <div class="nav-right">
-                <div class="theme-toggle">
-                    <button class="theme-btn active" id="btn-snow" title="Light">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"/>
-                            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                        </svg>
-                    </button>
-                    <button class="theme-btn" id="btn-carbon" title="Dark">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            <span class="prof-logo-text">Digitera</span>
+        </a>
+
+        <ul class="prof-nav-links">
+            <li><a href="index.php?page=client_home">Find Work</a></li>
+            <li><a href="#">Réclamation</a></li>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">Offre</a></li>
+            <li><a href="#">Formation</a></li>
+        </ul>
+
+        <div class="prof-nav-right">
+            <a href="index.php?page=profile" class="prof-user-chip" title="My Profile">
+                <div class="prof-avatar-nav">__NAV_AVATAR__</div>
+                <span class="prof-username-nav">__FULLNAME__</span>
+            </a>
+            <a href="index.php?page=profile&logout=1" class="prof-btn-logout" title="Logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main class="prof-main">
+
+    <!-- Page header -->
+    <div class="prof-page-header">
+        <div class="prof-header-left">
+            <p class="prof-header-label">Account Settings</p>
+            <h1 class="prof-header-title">My Profile</h1>
+            <p class="prof-header-sub">Manage your personal information and password.</p>
+        </div>
+        <a href="index.php?page=client_home" class="prof-btn-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            Back to Home
+        </a>
+    </div>
+
+    <div class="prof-layout">
+
+        <!-- ===== LEFT SIDEBAR ===== -->
+        <div class="prof-sidebar">
+            <div class="prof-avatar-card">
+
+                <div class="prof-avatar-ring">
+                    <div class="prof-avatar-circle" id="avatarCircle">__AVATAR__</div>
+                    <button type="button" class="prof-avatar-edit" id="avatarEditBtn" title="Change photo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                         </svg>
                     </button>
                 </div>
-                <div class="user-menu">
-                    <div class="user-avatar">__NAV_AVATAR__</div>
-                    <span class="user-name">__FULLNAME__</span>
-                </div>
-                <a href="index.php?page=profile&logout=1" class="btn-logout" title="Logout">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                        <polyline points="16 17 21 12 16 7"/>
-                        <line x1="21" y1="12" x2="9" y2="12"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </nav>
 
-    <!-- MAIN -->
-    <main class="main-content">
+                <div class="prof-avatar-name">__FULLNAME__</div>
+                <span class="prof-role-badge" style="color:__ROLE_COLOR__;background:__ROLE_BG__;">__ROLE__</span>
 
-        <div class="page-header">
-            <h1 class="greeting">My Profile</h1>
-            <p class="greeting-sub">Manage your personal information and password.</p>
-        </div>
+                <hr class="prof-divider">
 
-        <div class="profile-layout">
+                <div class="prof-section-label">Profile Photo</div>
 
-            <!-- ===== LEFT SIDEBAR ===== -->
-            <div class="profile-sidebar">
-                <div class="avatar-photo-card">
+                <form method="POST" action="index.php?page=profile" enctype="multipart/form-data" id="photoForm">
+                    <input type="hidden" name="action" value="photo">
+                    <input type="file" name="photo" id="photoInput" accept="image/*">
 
-                    <div class="avatar-ring">
-                        <div class="avatar-circle" id="avatarCircle">__AVATAR__</div>
-                        <button type="button" class="avatar-edit-btn" id="avatarEditBtn" title="Change photo">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="avatar-name">__FULLNAME__</div>
-                    <span class="role-badge" style="color:__ROLE_COLOR__;background:__ROLE_BG__;">__ROLE__</span>
-
-                    <hr class="card-divider">
-
-                    <div class="photo-section-label">Profile Photo</div>
-
-                    <form method="POST" action="index.php?page=profile" enctype="multipart/form-data" id="photoForm">
-                        <input type="hidden" name="action" value="photo">
-                        <input type="file" name="photo" id="photoInput" accept="image/*">
-
-                        <div class="drop-zone" id="dropZone">
-                            <div class="drop-zone-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="17 8 12 3 7 8"/>
-                                    <line x1="12" y1="3" x2="12" y2="15"/>
-                                </svg>
-                            </div>
-                            <div class="drop-zone-title">Drop your photo here</div>
-                            <div class="drop-zone-sub">or click to browse</div>
-                        </div>
-
-                        <div class="file-pill" id="filePill">
-                            <img class="file-pill-thumb" id="pillThumb" src="" alt="">
-                            <span class="file-pill-name" id="pillName"></span>
-                            <button type="button" class="file-pill-remove" id="removeBtn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="18" y1="6" x2="6" y2="18"/>
-                                    <line x1="6" y1="6" x2="18" y2="18"/>
-                                </svg>
-                            </button>
-                        </div>
-
-                        <button type="submit" class="btn-upload-photo" id="uploadBtn" disabled>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div class="prof-drop-zone" id="dropZone">
+                        <div class="prof-drop-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                 <polyline points="17 8 12 3 7 8"/>
                                 <line x1="12" y1="3" x2="12" y2="15"/>
                             </svg>
-                            Upload Photo
+                        </div>
+                        <div class="prof-drop-title">Drop your photo here</div>
+                        <div class="prof-drop-sub">or click to browse</div>
+                    </div>
+
+                    <div class="prof-file-pill" id="filePill">
+                        <img class="prof-pill-thumb" id="pillThumb" src="" alt="">
+                        <span class="prof-pill-name" id="pillName"></span>
+                        <button type="button" class="prof-pill-remove" id="removeBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
                         </button>
+                    </div>
 
-                        <p class="photo-hint">JPG, PNG or WEBP — max 2 MB</p>
-                    </form>
+                    <button type="submit" class="prof-btn-upload" id="uploadBtn" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        Upload Photo
+                    </button>
 
+                    <p class="prof-photo-hint">JPG, PNG or WEBP — max 2 MB</p>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- ===== RIGHT: Forms ===== -->
+        <div class="prof-forms">
+
+            <!--PHP_ERROR-->
+            <!--PHP_SUCCESS-->
+
+            <!-- Edit Profile -->
+            <div class="prof-card">
+                <div class="prof-card-header">
+                    <div class="prof-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="prof-card-title">Edit Profile</div>
+                        <div class="prof-card-sub">Update your personal information</div>
+                    </div>
                 </div>
+                <form method="POST" action="index.php?page=profile" novalidate>
+                    <input type="hidden" name="action" value="profile">
+                    <div class="prof-two-col">
+                        <div class="prof-group">
+                            <label class="prof-label" for="nom">Last Name</label>
+                            <input class="prof-input" type="text" id="nom" name="nom"
+                                   placeholder="Dupont" value="__NOM__" required>
+                        </div>
+                        <div class="prof-group">
+                            <label class="prof-label" for="prenom">First Name</label>
+                            <input class="prof-input" type="text" id="prenom" name="prenom"
+                                   placeholder="Marie" value="__PRENOM__" required>
+                        </div>
+                    </div>
+                    <div class="prof-group">
+                        <label class="prof-label" for="email">Email Address</label>
+                        <input class="prof-input" type="email" id="email" name="email"
+                               placeholder="you@example.com" value="__EMAIL__" required>
+                    </div>
+                    <div class="prof-group">
+                        <label class="prof-label" for="telephone">Phone Number</label>
+                        <input class="prof-input" type="tel" id="telephone" name="telephone"
+                               placeholder="+216 XX XXX XXX" value="__TELEPHONE__">
+                    </div>
+                    <div class="prof-actions">
+                        <button type="submit" class="prof-btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                                <polyline points="17 21 17 13 7 13 7 21"/>
+                                <polyline points="7 3 7 8 15 8"/>
+                            </svg>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <!-- ===== RIGHT: Forms ===== -->
-            <div class="profile-forms">
-
-                <!--PHP_ERROR-->
-                <!--PHP_SUCCESS-->
-
-                <!-- Edit Profile -->
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Edit Profile</div>
-                            <div class="card-subtitle">Update your personal information</div>
-                        </div>
-                        <div class="card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                <circle cx="12" cy="7" r="4"/>
-                            </svg>
-                        </div>
+            <!-- Change Password -->
+            <div class="prof-card">
+                <div class="prof-card-header">
+                    <div class="prof-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
                     </div>
-                    <form method="POST" action="index.php?page=profile" novalidate>
-                        <input type="hidden" name="action" value="profile">
-                        <div class="two-col-grid">
-                            <div class="form-group">
-                                <label class="form-label" for="nom">Last Name</label>
-                                <input class="form-control" type="text" id="nom" name="nom"
-                                       placeholder="Dupont" value="__NOM__" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="prenom">First Name</label>
-                                <input class="form-control" type="text" id="prenom" name="prenom"
-                                       placeholder="Marie" value="__PRENOM__" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="email">Email Address</label>
-                            <input class="form-control" type="email" id="email" name="email"
-                                   placeholder="you@example.com" value="__EMAIL__" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="telephone">Phone Number</label>
-                            <input class="form-control" type="tel" id="telephone" name="telephone"
-                                   placeholder="+216 XX XXX XXX" value="__TELEPHONE__">
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                                    <polyline points="17 21 17 13 7 13 7 21"/>
-                                    <polyline points="7 3 7 8 15 8"/>
+                    <div>
+                        <div class="prof-card-title">Change Password</div>
+                        <div class="prof-card-sub">Update your security credentials</div>
+                    </div>
+                </div>
+                <form method="POST" action="index.php?page=profile" novalidate>
+                    <input type="hidden" name="action" value="password">
+                    <div class="prof-group">
+                        <label class="prof-label" for="current_password">Current Password</label>
+                        <div class="prof-pw-wrap">
+                            <input class="prof-input" type="password" id="current_password"
+                                   name="current_password" placeholder="Enter current password" required>
+                            <button type="button" class="prof-toggle-pw" data-target="current_password" tabindex="-1">
+                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
                                 </svg>
-                                Save Changes
                             </button>
                         </div>
-                    </form>
-                </div>
-
-                <!-- Change Password -->
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Change Password</div>
-                            <div class="card-subtitle">Update your security credentials</div>
-                        </div>
-                        <div class="card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                            </svg>
-                        </div>
                     </div>
-                    <form method="POST" action="index.php?page=profile" novalidate>
-                        <input type="hidden" name="action" value="password">
-                        <div class="form-group">
-                            <label class="form-label" for="current_password">Current Password</label>
-                            <div class="input-password-wrap">
-                                <input class="form-control" type="password" id="current_password"
-                                       name="current_password" placeholder="Enter current password" required>
-                                <button type="button" class="toggle-pw" data-target="current_password" tabindex="-1">
+                    <div class="prof-two-col">
+                        <div class="prof-group">
+                            <label class="prof-label" for="new_password">New Password</label>
+                            <div class="prof-pw-wrap">
+                                <input class="prof-input" type="password" id="new_password"
+                                       name="new_password" placeholder="Min. 6 characters" required>
+                                <button type="button" class="prof-toggle-pw" data-target="new_password" tabindex="-1">
                                     <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
@@ -219,50 +237,35 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="two-col-grid">
-                            <div class="form-group">
-                                <label class="form-label" for="new_password">New Password</label>
-                                <div class="input-password-wrap">
-                                    <input class="form-control" type="password" id="new_password"
-                                           name="new_password" placeholder="Min. 6 characters" required>
-                                    <button type="button" class="toggle-pw" data-target="new_password" tabindex="-1">
-                                        <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="confirm_password">Confirm New Password</label>
-                                <div class="input-password-wrap">
-                                    <input class="form-control" type="password" id="confirm_password"
-                                           name="confirm_password" placeholder="Repeat new password" required>
-                                    <button type="button" class="toggle-pw" data-target="confirm_password" tabindex="-1">
-                                        <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </button>
-                                </div>
+                        <div class="prof-group">
+                            <label class="prof-label" for="confirm_password">Confirm New Password</label>
+                            <div class="prof-pw-wrap">
+                                <input class="prof-input" type="password" id="confirm_password"
+                                       name="confirm_password" placeholder="Repeat new password" required>
+                                <button type="button" class="prof-toggle-pw" data-target="confirm_password" tabindex="-1">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary btn-danger-outline">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                                </svg>
-                                Update Password
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
+                    </div>
+                    <div class="prof-actions">
+                        <button type="submit" class="prof-btn-danger">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            Update Password
+                        </button>
+                    </div>
+                </form>
             </div>
-        </div>
-    </main>
-</div>
+
+        </div><!-- /.prof-forms -->
+    </div><!-- /.prof-layout -->
+</main>
 
 <script src="view/dashboard.js"></script>
 <script>
@@ -307,6 +310,14 @@
         e.preventDefault();
         dropZone.classList.remove('dragover');
         if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+    });
+
+    // Password toggle
+    document.querySelectorAll('.prof-toggle-pw').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var target = document.getElementById(this.dataset.target);
+            target.type = target.type === 'password' ? 'text' : 'password';
+        });
     });
 })();
 </script>

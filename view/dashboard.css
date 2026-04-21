@@ -98,3 +98,245 @@
 
 @media (max-width: 992px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } }
+
+/* ===== SIDEBAR LAYOUT ===== */
+.dashboard-body {
+    display: flex;
+    flex: 1;
+    min-height: calc(100vh - 64px);
+    position: relative;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--bg-primary);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+    transition: width 0.25s ease, transform 0.25s ease;
+    z-index: 50;
+}
+
+.sidebar.collapsed {
+    width: 64px;
+}
+
+.sidebar-header {
+    padding: 1.25rem 1rem 0.5rem;
+}
+
+.sidebar-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    transition: opacity 0.2s;
+}
+
+.sidebar.collapsed .sidebar-label {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ===== Sidebar Nav Links ===== */
+.sidebar-nav {
+    flex: 1;
+    padding: 0.5rem 0.625rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6875rem 0.75rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: var(--transition);
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.sidebar-link:hover {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+.sidebar-link.active {
+    background: var(--accent-light);
+    color: var(--accent);
+}
+
+.sidebar-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-icon svg {
+    width: 20px;
+    height: 20px;
+    opacity: 0.85;
+}
+
+.sidebar-link.active .sidebar-icon svg {
+    opacity: 1;
+}
+
+.sidebar-text {
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+.sidebar.collapsed .sidebar-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+/* ===== Sidebar Footer ===== */
+.sidebar-footer {
+    padding: 0.625rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.sidebar-logout {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6875rem 0.75rem;
+    border-radius: 8px;
+    color: var(--danger);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: var(--transition);
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.sidebar-logout:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* ===== Sidebar toggle button ===== */
+.sidebar-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    margin-right: 0.5rem;
+}
+
+.sidebar-toggle-btn:hover {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+.sidebar-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===== Sidebar overlay (mobile) ===== */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 49;
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+}
+
+/* ===== Main content next to sidebar ===== */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+/* ===== Section switching ===== */
+.section-content {
+    display: none;
+}
+
+.section-content.active {
+    display: block;
+}
+
+/* ===== Empty section placeholder ===== */
+.empty-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+    text-align: center;
+    gap: 1rem;
+}
+
+.empty-icon svg {
+    width: 56px;
+    height: 56px;
+    color: var(--border-color);
+}
+
+.empty-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.empty-sub {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 64px;
+        left: -240px;
+        height: calc(100vh - 64px);
+        z-index: 50;
+        transition: left 0.25s ease;
+    }
+
+    .sidebar.mobile-open {
+        left: 0;
+    }
+
+    .sidebar-overlay {
+        display: block;
+    }
+
+    .main-content {
+        padding: 1.25rem;
+    }
+}
