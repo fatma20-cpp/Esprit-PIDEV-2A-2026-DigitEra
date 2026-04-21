@@ -1,33 +1,28 @@
 <?php
-include '../Controller/OffreController.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+<?php
+session_start();
 
-$offerC = new OffreController();
+require_once '../Controller/DemandeController.php';
 
-// 🔥 DELETE FIX
-if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 
-    $id = (int) $_GET['delete'];
 
-    if ($offerC->supprimerOffer($id)) {
-        header("Location: ListOffer.php");
-        exit();
-    } else {
-        echo "Delete failed";
-    }
-}
+$id_freelancer = 3; // HARDCODED FOR NOW, SHOULD COME FROM SESSION
 
-$list = $offerC->afficheroffres();
+$demandeC = new DemandeController();
+$demandes = $demandeC->getAllDemandes();
 
+// TAB FILTER
 $tab = $_GET['tab'] ?? 'all';
 
-if ($tab === 'open') {
-    $list = array_filter($list, function($d) {
-        return $d['status'] === 'open';
-    });
-} elseif ($tab === 'closed') {
-    $list = array_filter($list, function($d) {
-        return $d['status'] === 'closed';
-    });
+if ($tab === 'accepted') {
+    $demandes = array_filter($demandes, fn($d) => $d['status'] === 'accepted');
+} elseif ($tab === 'rejected') {
+    $demandes = array_filter($demandes, fn($d) => $d['status'] === 'rejected');
+} elseif ($tab === 'pending') {
+    $demandes = array_filter($demandes, fn($d) => $d['status'] === 'pending');
 }
 ?>
 
@@ -284,7 +279,7 @@ if ($tab === 'open') {
                         </svg>Offers</a>
                 </div>
                 <div class="nav-item">
-                    <a href="ListOfferAdmin.php" class="nav-link active "><svg viewBox="0 0 24 24" fill="none"
+                    <a href="ListOfferAdmin.php" class="nav-link "><svg viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="3" />
                             <path
@@ -300,7 +295,7 @@ if ($tab === 'open') {
                         </svg>Freelancer Demands</a>
                 </div>
                 <div class="nav-item">
-                    <a href="AdminDemands.php" class="nav-link"><svg viewBox="0 0 24 24" fill="none"
+                    <a href="AdminDemands.php" class="nav-link active"><svg viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="3" />
                             <path
@@ -326,30 +321,31 @@ if ($tab === 'open') {
             <!-- HEADER -->
             <div class="page-header-offers">
                 <div>
-                    <h1 class="greeting">All Offers </h1>
-                    <p class="greeting-sub">Manage your published offers</p>
+                    <h1 class="greeting">Offers Requests - Admin</h1>
+                    <p class="greeting-sub">Manage your published offers requests
+
+                    </p>
                 </div>
 
-                <a href="CreateOffer.php" class="btn btn-primary">
-                    + Add Offer
-                </a>
+
             </div>
 
             <div class="settings-nav">
 
-                <a href="?tab=all&id=<?php echo $id_offer; ?>"
-                    class="settings-nav-link <?php echo (!isset($_GET['tab']) || $_GET['tab']=='all') ? 'active' : ''; ?>">
+                <a href="?tab=all" class="settings-nav-link <?php echo ($tab === 'all') ? 'active' : ''; ?>">
                     All
                 </a>
 
-                <a href="?tab=open&id=<?php echo $id_offer; ?>"
-                    class="settings-nav-link <?php echo (isset($_GET['tab']) && $_GET['tab']=='open') ? 'active' : ''; ?>">
-                    Open Offers
+                <a href="?tab=pending" class="settings-nav-link <?php echo ($tab === 'pending') ? 'active' : ''; ?>">
+                    Pending
                 </a>
 
-                <a href="?tab=closed&id=<?php echo $id_offer; ?>"
-                    class="settings-nav-link <?php echo (isset($_GET['tab']) && $_GET['tab']=='closed') ? 'active' : ''; ?>">
-                    Closed Offers
+                <a href="?tab=accepted" class="settings-nav-link <?php echo ($tab === 'accepted') ? 'active' : ''; ?>">
+                    Accepted
+                </a>
+
+                <a href="?tab=rejected" class="settings-nav-link <?php echo ($tab === 'rejected') ? 'active' : ''; ?>">
+                    Rejected
                 </a>
 
             </div>
@@ -357,93 +353,102 @@ if ($tab === 'open') {
             <!-- GRID -->
             <div class="stats-grid">
 
-                <?php foreach ($list as $offer) { ?>
 
+
+                <?php if (empty($demandes)): ?>
                 <div class="card">
+                    <p>No demandes found.</p>
+                </div>
+                <?php endif; ?>
 
-                    <div class="stat-header">
+                <?php foreach ($demandes as $d): ?>
 
-                        <div style="flex:1; display:flex; justify-content:space-between; align-items-start">
-                            <div class="stat-title">
-                                <?php echo htmlspecialchars($offer['title']); ?>
+                <div class="card" style="margin-bottom: 1.2rem;">
+
+                    <!-- HEADER -->
+                    <div class="card-header" style="align-items: center;">
+
+                        <div style="display:flex; align-items:center; gap:10px;">
+
+                            <div class="user-avatar">
+                                <?php if (!empty($d['image'])): ?>
+                                <img src="../uploads/<?php echo $d['image']; ?>"
+                                    style="width:100%; height:100%; object-fit:cover; border-radius:6px;">
+                                <?php else: ?>
+                                <?php echo strtoupper(substr($d['freelancer_name'], 0, 1)); ?>
+                                <?php endif; ?>
                             </div>
-                            <span
-                                class="badge <?php echo ($offer['status'] === 'closed') ? 'badge-red' : 'badge-green'; ?>">
-                                <?php echo ucfirst($offer['status']); ?>
-                            </span>
+
+                            <div>
+                                <strong><?php echo $d['freelancer_name']; ?></strong><br>
+                                <small><?php echo $d['email']; ?></small>
+                            </div>
+
                         </div>
 
+                        <!-- STATUS -->
+                        <span class="badge 
+            <?php 
+                if ($d['status'] === 'accepted') echo 'badge-green';
+                elseif ($d['status'] === 'rejected') echo 'badge-red';
+                else echo 'badge-orange';
+            ?>">
+                            <?php echo ucfirst($d['status']); ?>
+                        </span>
 
                     </div>
 
+                    <div style="display:flex; justify-content: space-between; gap:4px; margin-top:10px;  margin-bottom:
+                        5px;">
+                        <div class="card-title" style="display:flex; align-items:center; gap:8px;">
+                            Offer : <?php echo $d['offer_title']; ?>
+                        </div>
 
-
-                    <div class="stat-description">
-                        <?php echo htmlspecialchars($offer['category'] ?? 'DEV'); ?> -
-                        <?php echo htmlspecialchars($offer['description']); ?>
+                        <div class="card-subtitle" style="display:flex; align-items:center; gap:6px;">
+                            <i class="fa fa-tag"></i>
+                            <?php echo $d['category']; ?>
+                        </div>
                     </div>
 
-                    <div class="offer-meta">
+                    <!-- BODY -->
+                    <div style="margin-top:10px;">
 
-                        <!-- BUDGET -->
-                        <div class="meta-line">
-                            <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="9" />
-                                <path d="M12 7v10M9 10h6" />
-                            </svg>
-                            <strong><?php echo $offer['budget']; ?> DT</strong>
+                        <!-- OFFER INFO -->
+                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
+
+
+
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span><strong>Price:</strong> <?php echo $d['price']; ?> DT</span>
+                            </div>
+
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span><strong>Delivery:</strong> <?php echo $d['delivery_time']; ?> days</span>
+                            </div>
+
                         </div>
 
-                        <!-- DEADLINE -->
-                        <div class="meta-line">
-                            <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="9" />
-                                <path d="M12 7v5l3 3" />
-                            </svg>
-                            <span class="deadline">
-                                <?php echo $offer['deadline'] ?? '-'; ?>
-                            </span>
-                        </div>
-
-                        <!-- CREATED -->
-                        <div class="meta-line">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="3" y="5" width="18" height="16" rx="2" />
-                                <path d="M16 3v4M8 3v4" />
-                            </svg>
-                            <?php echo $offer['created_at'] ?? '-'; ?>
-                        </div>
-
-                    </div>
-
-                    <!-- ACTIONS -->
-                    <div style="margin-top:20px; display:flex; gap:10px">
 
 
-
-                        <a href="ManageDemands.php?id=<?php echo urlencode($offer['id_offre']); ?>"
-                            class="btn btn-secondary">
-                            View Demands
-                        </a>
-
-                        <a href="UpdateOffer.php?id=<?php echo $offer['id_offre']; ?>" class="btn btn-secondary">
-                            Edit
-                        </a>
-
-                        <a href="ListOffer.php?delete=<?php echo urlencode($offer['id_offre']); ?>"
-                            class="btn btn-danger" onclick="return confirm('Delete this offer?');">
-                            Delete
-                        </a>
+                        <!-- OPTIONAL: VIEW MORE BUTTON -->
+                        <?php if (strlen($d['message']) > 150): ?>
+                        <button onclick="this.previousElementSibling.style.maxHeight='none'; this.style.display='none';"
+                            class="btn btn-ghost" style="margin-top:5px;">
+                            View more
+                        </button>
+                        <?php endif; ?>
 
                     </div>
 
                 </div>
 
-                <?php } ?>
+                <?php endforeach; ?>
 
             </div>
 
-        </main>
+    </div>
+
+    </main>
 
     </div>
     <script src="../js/templatemo-daynight-script.js"></script>

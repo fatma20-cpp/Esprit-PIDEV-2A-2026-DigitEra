@@ -3,7 +3,7 @@
 include '../Controller/OffreController.php';
 
 $offerC = new OffreController();
-$list = $offerC->afficheroffres();
+$list = $offerC->afficherOpenOffers();
 ?><html lang="en">
 
 <head>
@@ -172,7 +172,6 @@ $list = $offerC->afficheroffres();
 
                         <div class="stat-title">
                             <?php echo htmlspecialchars($offer['title']); ?>
-                            ---- <?php echo htmlspecialchars($offer['id_offer']); ?>
                         </div>
                     </div>
 

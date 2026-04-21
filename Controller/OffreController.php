@@ -69,6 +69,19 @@ class OffreController {
         }
     }
 
+    function afficherOpenOffers(){
+        $sql = "SELECT * FROM offres WHERE status = 'open'";
+        $db = config::getConnexion();
+
+        try {
+            $query = $db->prepare($sql);
+            $query->execute();
+            return $query->fetchAll();
+        } catch(Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }
+    }
+
     // 🔹 GET ONE (SECURED)
     function recupererOffer($id){
         $sql = "SELECT * FROM offres WHERE id_offre = :id";

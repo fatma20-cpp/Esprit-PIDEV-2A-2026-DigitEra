@@ -24,32 +24,43 @@ if (!$offer) {
     die("Offer not found");
 }
 
-$error = "";
+$errors = [
+    "price" => "",
+    "delivery_time" => "",
+    "message" => ""
+];
 
-$errors = [];
 
-$price = $_POST['price'] ?? "";
-$delivery = $_POST['delivery_time'] ?? "";
-$message = $_POST['message'] ?? "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $price = $_POST["price"] ?? "";
+    $delivery = $_POST["delivery_time"] ?? "";
+    $message = $_POST["message"] ?? "";
+   
+
+    $isValid = true;
 
 // VALIDATION
 if (empty($price) || !is_numeric($price)) {
-    $errors[] = "Valid price is required";
+     $errors["price"] = "Valid price is required";
+    $isValid = false;
 }
 
 if (empty($delivery) || !is_numeric($delivery)) {
-    $errors[] = "Valid delivery time is required";
+    $errors["delivery_time"] = "Valid delivery time is required";
+    $isValid = false;
 }
 
 if (empty($message)) {
-    $errors[] = "Message is required";
+    $errors["message"] = "Message is required";
+    $isValid = false;
 }
 
-if (empty($errors)) {
+if ($isValid) {
 
     $demande = new Demande(
         $_POST['id_offer'],
-        1,
+        3, // HARDCODED FREELANCER ID
         $price,
         $delivery,
         $message
@@ -59,6 +70,7 @@ if (empty($errors)) {
 
     header("Location: index.php#offers");
     exit();
+}
 }
 ?>
 
@@ -116,9 +128,10 @@ if (empty($errors)) {
         resize: none;
     }
 
-    .error {
-        color: red;
-        margin-top: 10px;
+    .error-text {
+        color: #ef4444;
+        font-size: 12px;
+        margin-top: 4px;
     }
 
     .btn-submit {
@@ -159,7 +172,6 @@ if (empty($errors)) {
 
             <ul class="nav-links">
                 <li><a href="index.php#home">Home</a></li>
-                <li><a href="./UserDashboard.html">Account</a></li>
                 <li><a href="index.php#dashboard">Dashboard</a></li>
                 <li><a href="index.php#freelancers">Freelancers</a></li>
                 <li><a href="index.php#offers">Offers</a></li>
@@ -190,55 +202,83 @@ if (empty($errors)) {
             <li><a href="index.php#contact">Contact</a></li>
         </ul>
     </nav>
-    <div class="container">
+    <div class="main-content">
 
-        <a href="index.php#offers" class="back-btn">
-            ← Back to Offers
-        </a>
+        <!-- HEADER -->
+        <div class="page-header">
+            <a href="index.php#offers" class="btn btn-ghost">
+                <i class="fa-solid fa-arrow-left"></i> Back to Offers
+            </a>
 
-        <h2>Apply to Offer</h2>
+            <h2 class="greeting">Apply to Offer</h2>
+            <p class="greeting-sub">Submit your proposal to this project</p>
+        </div>
 
-        <!-- 🔹 OFFER PREVIEW -->
-        <div class="offer-preview">
+        <!-- GRID LAYOUT -->
+        <div class="apply-container">
 
-            <h3><?php echo htmlspecialchars($offer['title']); ?></h3>
+            <!-- LEFT → OFFER -->
+            <div class="apply-offer">
 
-            <p><?php echo htmlspecialchars($offer['description']); ?></p>
+                <div class="offer-box">
 
-            <div class="offer-meta">
-                <span><i class="fas fa-money-bill-wave"></i> <?php echo $offer['budget']; ?> DT</span>
-                <span><i class="fas fa-tag"></i> <?php echo $offer['category']; ?></span>
-                <span><i class="fas fa-calendar"></i> <?php echo $offer['deadline']; ?></span>
+                    <h3><?php echo htmlspecialchars($offer['title']); ?></h3>
+
+                    <p class="offer-desc">
+                        <?php echo htmlspecialchars($offer['description']); ?>
+                    </p>
+
+                    <div class="offer-meta">
+                        <span><i class="fa fa-money-bill"></i> <?php echo $offer['budget']; ?> DT</span>
+                        <span><i class="fa fa-tag"></i> <?php echo $offer['category']; ?></span>
+                        <span><i class="fa fa-calendar"></i> <?php echo $offer['deadline']; ?></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT → FORM -->
+            <div class="apply-form">
+
+                <h2 class="apply-title">Submit Proposal</h2>
+
+                <form method="POST">
+
+                    <input type="hidden" name="id_offer" value="<?php echo $offer['id_offre']; ?>">
+
+                    <div class="form-group">
+                        <label>Proposed Price (DT)</label>
+                        <input type="number" name="price" placeholder="Enter your price">
+                        <div class="error-text"><?php echo $errors["price"]; ?></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Delivery Time (days)</label>
+                        <input type="number" name="delivery_time" placeholder="e.g. 5">
+                        <div class="error-text"><?php echo $errors["delivery_time"]; ?></div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea name="message" placeholder="Explain why you are the best fit..."></textarea>
+                        <div class="error-text"><?php echo $errors["message"]; ?></div>
+
+                    </div>
+
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fa fa-paper-plane"></i> Apply Now
+                    </button>
+
+                </form>
+
             </div>
 
         </div>
 
-        <form method="POST">
-
-            <input type="hidden" name="id_offer" value="<?php echo $offer['id_offre']; ?>">
-
-            <!-- PRICE -->
-            <label>Proposed Price (DT)</label>
-            <input type="text" name="price" placeholder="Enter your price">
-
-            <!-- DELIVERY -->
-            <label>Delivery Time (days)</label>
-            <input type="text" name="delivery_time" placeholder="e.g. 5">
-
-            <!-- MESSAGE -->
-            <label>Message</label>
-            <textarea name="message" placeholder="Explain your offer..."></textarea>
-
-            <!-- ERRORS -->
-            <?php if(!empty($errors)) { ?>
-            <div style="color:red">
-                <?php foreach($errors as $e) echo "<p>$e</p>"; ?>
-            </div>
-            <?php } ?>
-
-            <button type="submit">Apply</button>
-
-        </form>
     </div>
 
     </div>
