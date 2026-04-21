@@ -91,12 +91,6 @@ input, select, textarea {
     font-size: 0.9375rem;
 }
 
-/* ===== Layout ===== */
-.app-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
 
 .main-content {
     flex: 1;
@@ -108,23 +102,16 @@ input, select, textarea {
 
 /* ===== Top Navigation ===== */
 .top-nav {
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
+    position: fixed;
+    left: 0;
     top: 0;
-    z-index: 100;
-    transition: var(--transition);
+    width: 220px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
 }
 
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-}
 
 .nav-left {
     display: flex;
@@ -160,8 +147,9 @@ input, select, textarea {
 /* ===== Navigation Menu ===== */
 .nav-menu {
     display: flex;
-    align-items: center;
-    gap: 0.25rem;
+    flex-direction: column;   /* 🔥 THIS makes it vertical */
+    align-items: flex-start;
+    gap: 10px;
 }
 
 .nav-item {
@@ -172,17 +160,21 @@ input, select, textarea {
     display: flex;
     align-items: center;
     gap: 0.375rem;
-    padding: 0.5rem 0.875rem;
-    color: var(--text-secondary);
+
+    padding-left: 30px;   /* 👈 THIS slides text */
+
+    color: #a855f7;
     font-size: 0.9375rem;
     font-weight: 500;
     border-radius: 6px;
-    transition: var(--transition);
 }
 
 .nav-link:hover {
     color: var(--text-primary);
     background: var(--bg-surface);
+}
+.app-container {
+    margin-left: 220px;
 }
 
 .nav-link.active {
@@ -253,9 +245,7 @@ input, select, textarea {
 
 /* ===== Nav Right ===== */
 .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    display: none;
 }
 
 /* ===== Theme Toggle ===== */
@@ -1615,7 +1605,9 @@ tr:hover td {
 
 @media (max-width: 992px) {
     .nav-container {
-        padding: 0 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
     }
     
     .nav-menu {
@@ -1848,4 +1840,134 @@ tr:hover td {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
+}
+/* ===== FIX NAVBAR VERTICAL ===== */
+
+.nav-container {
+    display: flex;
+    flex-direction: column;   /* 🔥 STACK EVERYTHING */
+    align-items: flex-start;
+    height: auto;
+    padding: 0;
+}
+
+/* logo on top */
+.logo {
+    margin-bottom: 20px;
+}
+
+/* menu vertical */
+.nav-menu {
+    width: 100%;
+}
+.nav-menu a.nav-link {
+    color: #E2E8F0 !important;
+}
+.nav-menu a.nav-link:hover {
+    color: #FFFFFF !important;
+}
+.form-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    margin: 40px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.form-card h2 {
+    margin-bottom: 20px;
+    color: #1E293B;
+}
+
+/* INPUTS */
+.form-card input,
+.form-card textarea,
+.form-card select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+/* FOCUS */
+.form-card input:focus,
+.form-card textarea:focus,
+.form-card select:focus {
+    border-color: #EC4899;
+    outline: none;
+    box-shadow: 0 0 5px #EC4899;
+}
+
+/* ERROR */
+.form-card small {
+    color: #EC4899;
+    font-size: 12px;
+}
+
+/* BUTTON */
+.form-card button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #EC4899;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-card button:hover {
+    background: #DB2777;
+}
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.modern-table th {
+    background: #0f172a;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.modern-table td {
+    padding: 12px;
+}
+
+.modern-table tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.modern-table tr:hover {
+    background: #eef2ff;
+}
+.btn-retour {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: transparent;
+    border: 2px solid #ec4899;
+    color: #ec4899;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.btn-retour:hover {
+    background: #ec4899;
+    color: white;
+}
+canvas {
+    max-width: 100%;
 }

@@ -1,287 +1,538 @@
-<?php
-require_once '../../controller/FormationController.php';
+    <?php
+    $pdo = new PDO("mysql:host=localhost;dbname=gestion_formation;charset=utf8", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $view = $_GET['action'] ?? 'list';
+    ?>
+    <?php
+// 🔥 HANDLE UPDATE BEFORE ANY HTML OUTPUT
+if(isset($_GET['action']) && $_GET['action'] == 'updateCert'){
 
-$controller = new FormationController();
-$formations = $controller->getFormations();
+    $stmt = $pdo->prepare("
+        UPDATE certificate 
+        SET user_name=?, date_obtention=? 
+        WHERE certificate_code=?
+    ");
+
+    $stmt->execute([
+        $_POST['user_name'],
+        $_POST['date_obtention'],
+        $_POST['certificate_code']
+    ]);
+
+    header("Location: index.php?action=showCert&user_name=".$_POST['user_name']."&date=".$_POST['date_obtention']."&code=".$_POST['certificate_code']."&success=updated");
+    exit;
+}
 ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Graph Page - Modern Analytics Dashboard</title>
+        <link rel="stylesheet" href="templatemo-graph-page.css">
+    <!-- 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Formations</title>
+    TemplateMo 602 Graph Page
 
-<script>
-    if (localStorage.getItem('daynight-theme') === 'carbon') {
-        document.documentElement.classList.add('carbon');
-    }
-</script>
+    https://templatemo.com/tm-602-graph-page
 
-<link rel="stylesheet" href="../back/template/templatemo-daynight-style.css">
+    -->
+    </head>
 
-<style>
+    <body>
+            <div id="bookingMessage" style="
+        display:none;
+        position:fixed;
+        top:20px;
+        left:50%;
+        transform:translateX(-50%);
+        background:#22c55e;
+        color:white;
+        padding:15px 25px;
+        border-radius:10px;
+        font-weight:bold;
+        z-index:9999;
+    ">
+        ✔ Booking done successfully!
+    </div>
 
-/* 🌍 GLOBAL */
-body {
-    background: #f5f7fb;
-    font-family: Arial, sans-serif;
-    margin: 0;
-}
+    <div id="certificateForm" style="display:none; position:fixed; top:50%; left:50%;
+    transform:translate(-50%,-50%); background:#111; padding:30px; border-radius:10px; z-index:1000;">
 
-/* 🔝 NAVBAR */
-.top-nav {
-    background: #FFFFFF;
-    padding: 15px 30px;
-}
+        <h3 style="color:white;">Enter your name</h3>
 
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        <form method="POST" action="addCertificate.php">
 
-.logo {
-    color: #096996;
-    font-size: 22px;
-    font-weight: bold;
-    text-decoration: none;
-}
+            <input type="text" name="user_name" placeholder="Your name" required
+                style="padding:10px; width:100%;">
 
-.nav-link {
-    color: #0d2b35;
-    margin-left: 20px;
-    text-decoration: none;
-    font-weight: 500;
-}
+            <!-- 🔥 VERY IMPORTANT -->
+            <input type="hidden" name="formation_id" id="formationId">
+            <input type="date" name="date_obtention" required>
 
-.nav-link:hover {
-    color: #0EA5E9;
-}
+            <br><br>
 
-/* 📄 CONTENT */
-.main-content {
-    padding: 30px;
-}
+            <button type="button" class="cta-button" onclick="checkForm()">
+                Generate
+            </button>
 
-h1 {
-    color: #0d2b35;
-}
+        </form>
+        <button class="cta-button" onclick="closeForm()">Cancel</button>
 
-/* 🔍 FILTERS */
-.filters {
-    display: flex;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.filters input,
-.filters select {
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    background: white;
-}
-
-/* 🧩 GRID */
-.formations-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-/* 📦 CARD */
-.card {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    border-left: 5px solid #fba01c;
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-.card h3 {
-    color: #096996;
-}
-
-.card p {
-    color: #555;
-}
-
-/* 🔘 BUTTON */
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 15px;
-    background: #38BDF8;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.btn:hover {
-    background: #0EA5E9;
-}
-.success {
-    background:#d7e8da;
-    color:#096996;
-    padding:10px;
+    </div>
+    <div id="quizBox" style="
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    padding:25px;
     border-radius:10px;
+    z-index:2000;
     text-align:center;
-    margin-bottom:20px;
-    font-weight:bold;
-}
+">
 
-/* 📱 RESPONSIVE */
-@media (max-width: 768px) {
-    .formations-grid {
-        grid-template-columns: 1fr;
-    }
-}
+    <h3>Quick Question ❓</h3>
 
-</style>
-</head>
+    <p>HTML is:</p>
 
-<body>
+    <select id="quizAnswer">
+        <option value="">-- Choose --</option>
+        <option value="wrong">Programming language</option>
+        <option value="correct">Markup language</option>
+        <option value="wrong2">Database</option>
+    </select>
 
-<div class="app-container">
+    <br><br>
 
-    <!-- 🔝 NAVBAR -->
-    <nav class="top-nav">
-        <div class="nav-container">
-            <div class="nav-left">
-                <a href="index.php" class="logo">
-                    <div class="logo-icon">✔</div>
-                    Formation Certification
-                </a>
-                <div class="nav-menu">
-                    <div class="nav-item">
-                        <a href="index.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">
-                            Accueil
-                        </a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="addFormation.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'addFormation.php' ? 'active' : ''; ?>">
-                            Ajouter Formation
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="nav-right">
-                <div class="theme-toggle">
-                    <button class="theme-btn theme-btn-snow active" onclick="setTheme('snow')" title="Snow Edition">☀</button>
-                    <button class="theme-btn theme-btn-carbon" onclick="setTheme('carbon')" title="Carbon Edition">🌙</button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 📄 CONTENT -->
-<div class="main-content">
-
-    <?php if(isset($_GET['booked'])): ?>
-        <div class="success">
-            Formation réservée avec succès ✔
-        </div>
-    <?php endif; ?>
-
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h1>Formations</h1>
-
-        <a href="addFormation.php" class="btn">
-            + Ajouter Formation
-        </a>
-    </div>
-
-        <!-- 🔍 FILTER -->
-        <div class="filters">
-            <input type="text" id="search" placeholder="Rechercher...">
-
-            <select id="domaine">
-                <option value="">Tous domaines</option>
-                <option value="design">Design</option>
-                <option value="dev">Dev</option>
-            </select>
-
-            <select id="niveau">
-                <option value="">Tous niveaux</option>
-                <option value="debutant">Débutant</option>
-                <option value="avance">Avancé</option>
-            </select>
-        </div>
-
-        <!-- 🧩 GRID -->
-        <div class="formations-grid" id="formationsContainer">
-
-            <?php foreach($formations as $f): ?>
-
-                <div class="card formation-item"
-                     data-titre="<?php echo strtolower($f['titre']); ?>"
-                     data-domaine="<?php echo strtolower($f['domaine']); ?>"
-                     data-niveau="<?php echo strtolower($f['niveau']); ?>">
-
-                    <h3><?php echo $f['titre']; ?></h3>
-
-                    <p><?php echo substr($f['description'], 0, 80); ?>...</p>
-
-                    <p><strong><?php echo $f['domaine']; ?></strong></p>
-
-                    <p><?php echo $f['niveau']; ?></p>
-
-                    <a href="formationDetails.php?id=<?php echo $f['id']; ?>" class="btn">
-                        Voir plus →
-                    </a>
-                    <a href="index.php?booked=<?php echo $f['id']; ?>" class="btn">Book</a>
-
-                </div>
-
-            <?php endforeach; ?>
-
-        </div>
-
-    </div>
+    <button class="cta-button" onclick="validateQuiz()">Validate</button>
+    <button class="cta-button" onclick="closeQuiz()">Cancel</button>
 
 </div>
 
-<!-- 🔍 FILTER SCRIPT -->
 <script>
-let searchInput = document.getElementById("search");
-let domaineSelect = document.getElementById("domaine");
-let niveauSelect = document.getElementById("niveau");
-
-function filter() {
-    let search = searchInput.value.toLowerCase();
-    let domaine = domaineSelect.value;
-    let niveau = niveauSelect.value;
-
-    let items = document.querySelectorAll(".formation-item");
-
-    items.forEach(item => {
-        let titre = item.getAttribute("data-titre");
-        let dom = item.getAttribute("data-domaine");
-        let niv = item.getAttribute("data-niveau");
-
-        let show = true;
-
-        if (!titre.includes(search)) show = false;
-        if (domaine && dom !== domaine) show = false;
-        if (niveau && niv !== niveau) show = false;
-
-        item.style.display = show ? "block" : "none";
-    });
+function openCertificateForm(id){
+    document.getElementById("certificateForm").style.display = "block";
+    document.getElementById("formationId").value = id;
 }
 
-searchInput.addEventListener("keyup", filter);
-domaineSelect.addEventListener("change", filter);
-niveauSelect.addEventListener("change", filter);
+function closeForm(){
+    document.getElementById("certificateForm").style.display = "none";
+}
+</script>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+    function toggleDetails(id){
+        let div = document.getElementById("details-" + id);
+
+        if(div.style.display === "none"){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    </script>
+
+        <!-- Navigation -->
+        <nav id="navbar">
+            <div class="nav-container">
+                <a href="#home" class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 13h2v8H3zm4-8h2v13H7zm4-2h2v15h-2zm4 4h2v11h-2zm4-2h2v13h-2z"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Graph Page</span>
+                </a>
+                <ul class="nav-links">
+
+                    <li><a href="#">Portfolio</a></li>
+
+                    <li><a href="#">Reclamations</a></li>
+
+                    <li><a href="#">Projects</a></li>
+
+                    <!-- 🔥 THIS IS THE IMPORTANT ONE -->
+                    <li>
+                        <a href="index.php" class="<?php echo $view === 'list' ? 'active' : ''; ?>">
+                            Formations
+                        </a>
+                    </li>
+
+                    <li><a href="#">Users</a></li>
+
+                </ul>
+                <a href="https://www.google.com/search" target="_blank" rel="noopener" title="Search">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </a>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <ul class="nav-links-mobile">
+
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Reclamations</a></li>
+                <li><a href="#">Projects</a></li>
+
+                <li>
+                    <a href="index.php" class="<?php echo $view === 'list' ? 'active' : ''; ?>">
+                        Formations
+                    </a>
+                </li>
+
+                <li><a href="#">Users</a></li>
+
+            </ul>
+        </nav>
+
+        <!-- Dashboard Section -->
+        <section class="dashboard-section">
+        <div class="dashboard-container">
+
+            <h2 class="section-title">📚 Formations</h2>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        
+        <h1>Formations</h1>
+
+        <a href="index.php?action=add" class="btn">
+            + Ajouter Formation
+        </a>
+
+    </div>
+    <?php if($view == 'list'): ?>
+
+        <?php $formations = $pdo->query("SELECT * FROM formation")->fetchAll(); ?>
+
+        <div class="stats-grid">
+            <?php foreach($formations as $f): ?>
+                <div class="stat-card">
+
+                    <div class="stat-header">
+                        <div class="stat-icon">📘</div>
+                        <div class="stat-title"><?= $f['titre'] ?></div>
+                    </div>
+
+                    <div class="stat-description">
+                        <?= substr($f['description'], 0, 40) ?>...
+                    </div>
+
+                    <br>
+
+                    <!-- ✅ ONLY BUTTON -->
+                    <a class="cta-button" href="index.php?action=details&id=<?= $f['id'] ?>">
+                        Voir plus
+                    </a>
+
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+    <?php elseif($view == 'details'): ?>
+
+        <?php
+        $stmt = $pdo->prepare("SELECT * FROM formation WHERE id=?");
+        $stmt->execute([$_GET['id']]);
+        $f = $stmt->fetch();
+        ?>
+
+        <div class="dashboard-container">
+
+            <h2 class="section-title">📄 Formation Details</h2>
+
+            <div class="stat-card">
+
+                <div class="stat-header">
+                    <div class="stat-icon">📘</div>
+                    <div class="stat-title"><?= $f['titre'] ?></div>
+                </div>
+
+                <div class="stat-description">
+                    <?= $f['description'] ?>
+                </div>
+
+                <br><br>
+
+                <!-- ✅ ACTIONS HERE ONLY -->
+                <button class="cta-button" onclick="bookFormation()">Book</button>
+
+                <button class="cta-button" onclick="openCertificateForm(<?= $f['id'] ?>)">
+                    Get Certificate
+                </button>
+
+                <br><br>    
+
+                <a href="index.php" class="cta-button">⬅ Retour</a>
+
+            </div>
+
+        </div>
+    <?php elseif($view == 'showCert'): ?>
+
+    <div id="certificate" style="
+        text-align:center;
+        padding:40px;
+        background:white;
+        color:black;
+        border-radius:10px;
+    ">
+
+        <h1>🎓 Certificate</h1>
+
+        <p>This certifies that</p>
+
+        <h2><?= $_GET['user_name'] ?? 'No Name' ?></h2>
+        <p>Date:</p>
+        <strong><?= $_GET['date'] ?? '' ?></strong>
+
+        <p>Certificate Code:</p>
+        <strong><?= $_GET['code'] ?? '' ?></strong>
+
+        <p>has successfully completed the formation</p>
+
+        <br>
+
+        <div class="no-print">
+
+            <button onclick="downloadPDF()" class="cta-button">
+                Download PDF
+            </button>
+
+            <br><br>
+
+            <a href="index.php" class="cta-button">⬅ Retour</a>
+            <br><br>
+
+            <a href="index.php?action=editCert&name=<?= $_GET['user_name'] ?>&date=<?= $_GET['date'] ?>&code=<?= $_GET['code'] ?>" 
+            class="cta-button">
+            ✏ Modifier
+            </a>
+
+        </div>
+
+    </div>
+    <?php elseif($view == 'editCert'): ?>
+
+<div class="dashboard-container">
+
+    <h2>Modifier Certificat</h2>
+
+    <form method="POST" action="index.php?action=updateCert">
+
+        <input type="text" name="user_name" 
+               value="<?= $_GET['name'] ?>" required>
+
+        <input type="date" name="date_obtention" 
+               value="<?= $_GET['date'] ?>" required>
+
+        <input type="hidden" name="certificate_code" 
+               value="<?= $_GET['code'] ?>">
+
+        <br><br>
+
+        <button class="cta-button">Update</button>
+
+    </form>
+
+</div>
+
+
+    <?php elseif($view == 'add'): ?>
+
+        <form method="POST" action="index.php?action=addAction" class="contact-form">
+
+            <div class="form-group">
+                <label>Titre</label>
+                <input type="text" name="titre" id="titre" required>
+                
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Domaine</label>
+                <input type="text" name="domaine" required>
+            </div>
+
+            <div class="form-group">
+                <label>Niveau</label>
+                <select name="niveau" required>
+                    <option value="">-- Choisir --</option>
+                    <option value="debutant">Débutant</option>
+                    <option value="intermediaire">Intermédiaire</option>
+                    <option value="avance">Avancé</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Prix</label>
+                <input type="number" step="0.01" name="prix" required>
+            </div>
+
+            <div class="form-group">
+                <label>Durée</label>
+                <input type="text" name="duree" required>
+            </div>
+
+            <div class="form-group">
+                <label>Instructor</label>
+                <input type="text" name="instructor" required>
+            </div>
+
+            <button class="cta-button">Ajouter</button>
+
+        </form>
+            <a href="index.php" class="cta-button">⬅ Retour</a>
+
+    <?php elseif($view == 'addAction'):
+
+        $titre = trim($_POST['titre']);
+
+        $regex = "/^[A-Za-zÀ-ÿ\s]+$/";
+
+        // ❌ EMPTY
+        if(empty($titre)){
+            die("❌ Le titre est obligatoire");
+        }
+
+        // ❌ NUMBERS NOT ALLOWED
+        if(!preg_match($regex, $titre)){
+            die("❌ Le titre doit contenir seulement des lettres");
+        }
+
+        // ✅ INSERT IF OK
+        $stmt = $pdo->prepare("
+            INSERT INTO formation 
+            (titre, description, domaine, niveau, prix, duree, instructor) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+
+        $stmt->execute([
+            $_POST['titre'],
+            $_POST['description'],
+            $_POST['domaine'],
+            $_POST['niveau'],
+            $_POST['prix'],
+            $_POST['duree'],
+            $_POST['instructor']
+        ]);
+
+        header("Location: index.php");
+        exit;
+
+        endif;
+        ?>
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <p class="copyright">© 2026 Graph Page. All rights reserved. Transforming data into insights. 
+                | Designed by <a href="https://templatemo.com" rel="nofollow noopener" target="_blank">TemplateMo</a></p>
+            </div>
+        </footer>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    let titreInput = document.getElementById("titre");
+
+    if(titreInput){
+
+        titreInput.addEventListener("input", function(){
+
+            // remove numbers automatically
+            this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '');
+
+        });
+
+    }
+
+});
 </script>
 
-<script src="../back/template/templatemo-daynight-script.js"></script>
+    <script>
+    function bookFormation(){
+        let msg = document.getElementById("bookingMessage");
 
-</body>
-</html>
+        msg.style.display = "block";
+
+        // hide after 3 seconds
+        setTimeout(() => {
+            msg.style.display = "none";
+        }, 3000);
+    }
+    </script>
+    <script>
+function downloadPDF(){
+
+    let original = document.getElementById("certificate");
+
+    // 🧠 clone the certificate
+    let clone = original.cloneNode(true);
+
+    // ❌ remove buttons from clone
+    let buttons = clone.querySelectorAll(".no-print");
+    buttons.forEach(el => el.remove());
+
+    // 🧾 generate PDF from CLEAN clone
+    html2pdf().from(clone).save("certificate.pdf");
+}
+</script>
+<script>
+function checkForm(){
+
+    let name = document.querySelector("input[name='user_name']").value.trim();
+    let date = document.querySelector("input[name='date_obtention']").value;
+    let formation = document.getElementById("formationId").value;
+
+    if(name === "" || date === "" || formation === ""){
+        alert("❌ Please fill all fields!");
+        return;
+    }
+
+    let regex = /^[A-Za-zÀ-ÿ\s]+$/;
+    if(!regex.test(name)){
+        alert("❌ Name must contain only letters!");
+        return;
+    }
+
+    let today = new Date().toISOString().split("T")[0];
+    if(date > today){
+        alert("❌ Date cannot be in the future!");
+        return;
+    }
+
+    // ✅ show quiz instead of submitting
+    document.getElementById("quizBox").style.display = "block";
+}
+
+function validateQuiz(){
+
+    let answer = document.getElementById("quizAnswer").value;
+
+    if(answer === "correct"){
+
+        // ✅ NOW submit form
+        document.querySelector("#certificateForm form").submit();
+
+    } else {
+        alert("❌ Wrong answer!");
+    }
+}
+
+function closeQuiz(){
+    document.getElementById("quizBox").style.display = "none";
+}
+</script>
+    </body>
+    </html>

@@ -17,7 +17,6 @@ if(!$formation){
 }
 ?>
 
-<?php include 'layout/header.php'; ?>
 
 <div class="main-content">
 
@@ -181,5 +180,3 @@ function validateForm(){
     return valid;
 }
 </script>
-
-<?php include 'layout/footer.php'; ?>

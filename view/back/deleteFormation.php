@@ -3,18 +3,20 @@ require_once '../../controller/FormationController.php';
 
 $controller = new FormationController();
 
-// 🔐 Check if ID exists and is valid
+// Check if ID exists and is valid
 if(isset($_GET['id']) && is_numeric($_GET['id'])){
 
     $id = intval($_GET['id']);
 
+    // Delete formation
     $controller->deleteFormation($id);
 
-    header("Location: listFormation.php?success=deleted");
+    // Redirect to list page (BACK OFFICE)
+    header("Location: index.php?page=list&success=deleted");
     exit;
 }
 
-// ❌ If no ID → redirect safely
-header("Location: listFormation.php?error=1");
+// If error
+header("Location: index.php?page=list&error=1");
 exit;
 ?>

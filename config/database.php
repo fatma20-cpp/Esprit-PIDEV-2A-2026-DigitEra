@@ -3,7 +3,7 @@
 class Database {
 
     private $host = "localhost";
-    private $db_name = "gestion_formation";
+    private $db_name = "digitera";
     private $username = "root";
     private $password = "";
     private $conn;

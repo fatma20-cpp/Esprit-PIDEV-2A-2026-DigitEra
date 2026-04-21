@@ -19,6 +19,9 @@ class FormationController {
         $this->formation->description = $data['description'];
         $this->formation->domaine = $data['domaine'];
         $this->formation->niveau = $data['niveau'];
+        $this->formation->prix = $data['prix'];
+        $this->formation->duree = $data['duree'];
+        $this->formation->instructor = $data['instructor'];
 
         return $this->formation->create();
     }
@@ -37,7 +40,10 @@ class FormationController {
         $this->formation->description = $data['description'];
         $this->formation->domaine = $data['domaine'];
         $this->formation->niveau = $data['niveau'];
-
+        
+    $this->formation->prix = $data['prix'];
+    $this->formation->duree = $data['duree'];
+    $this->formation->instructor = $data['instructor'];
         return $this->formation->update();
     }
 

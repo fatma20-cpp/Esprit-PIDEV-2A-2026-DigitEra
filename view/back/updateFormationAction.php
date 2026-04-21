@@ -3,47 +3,49 @@ require_once '../../controller/FormationController.php';
 
 $controller = new FormationController();
 
-if($_POST){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // 🔐 ID check
     if(!isset($_POST['id']) || !is_numeric($_POST['id'])){
-        die("ID invalide");
+        header("Location: index.php?page=list&error=id");
+        exit;
     }
 
-    // 🔹 Titre
     if(strlen($_POST['titre']) < 3){
-        die("Titre invalide");
+        header("Location: index.php?page=edit&id=".$_POST['id']."&error=titre");
+        exit;
     }
 
-    // 🔹 Domaine
     if(empty($_POST['domaine'])){
-        die("Domaine obligatoire");
+        header("Location: index.php?page=edit&id=".$_POST['id']."&error=domaine");
+        exit;
     }
 
-    // 🔹 Niveau
     if(empty($_POST['niveau'])){
-        die("Niveau obligatoire");
+        header("Location: index.php?page=edit&id=".$_POST['id']."&error=niveau");
+        exit;
     }
 
-    // 🔹 Prix
     if(!isset($_POST['prix']) || $_POST['prix'] <= 0){
-        die("Prix invalide");
+        header("Location: index.php?page=edit&id=".$_POST['id']."&error=prix");
+        exit;
     }
 
-    // 🔹 Durée
     if(empty($_POST['duree'])){
-        die("Durée obligatoire");
+        header("Location: index.php?page=edit&id=".$_POST['id']."&error=duree");
+        exit;
     }
 
-    // 🔹 Instructor
     if(empty($_POST['instructor'])){
-        die("Instructor obligatoire");
+        header("Location: index.php?page=edit&id=".$_POST['id']."&error=instructor");
+        exit;
     }
 
     // 🚀 UPDATE
     $controller->updateFormation($_POST);
 
-    header("Location: listFormation.php?success=updated");
+    // ✅ SUCCESS REDIRECT (FIXED)
+    header("Location: index.php?page=list");
     exit;
 }
 ?>
